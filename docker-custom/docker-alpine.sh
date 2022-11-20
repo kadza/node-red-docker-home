@@ -17,6 +17,6 @@ docker buildx build \
     --build-arg TAG_SUFFIX=minimal \
     --network=host \
     --file Dockerfile.custom \
-    --platform linux/amd64,linux/arm64v8 \
+    --platform linux/amd64,linux/arm64/v8 \
     --push \
     --tag kadzaa/private:${TAG} .
