@@ -1,34 +1,26 @@
 {
-    "name": "node-red-docker",
+    "name": "home-automation",
+    "description": "A Node-RED Project",
     "version": "3.0.2",
-    "description": "Low-code programming for event-driven applications",
-    "homepage": "http://nodered.org",
-    "license": "Apache-2.0",
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/node-red/node-red-docker.git"
+    "private": true,
+    "node-red": {
+        "settings": {
+            "flowFile": "flows.json",
+            "credentialsFile": "flows_cred.json"
+        }
     },
     "main": "node_modules/node-red/red/red.js",
     "scripts": {
-        "start": "node $NODE_OPTIONS node_modules/node-red/red.js $FLOWS",
-        "debug": "node --inspect=0.0.0.0:9229 $NODE_OPTIONS node_modules/node-red/red.js $FLOWS",
-        "debug_brk": "node --inspect=0.0.0.0:9229 --inspect-brk $NODE_OPTIONS node_modules/node-red/red.js $FLOWS"
+        "start": "node $NODE_OPTIONS node_modules/node-red/red.js $FLOWS"
     },
-    "contributors": [
-        {
-            "name": "Dave Conway-Jones"
-        },
-        {
-            "name": "Nick O'Leary"
-        },
-        {
-            "name": "James Thomas"
-        },
-        {
-            "name": "Raymond Mouthaan"
-        }
-    ],
     "dependencies": {
+        "@kadza/node-red-contrib-komfovent": "~0.3.3",
+        "node-red-contrib-blindcontroller": "~4.8.6",
+        "node-red-contrib-homekit-bridged": "~1.4.3",
+        "node-red-contrib-influxdb": "~0.6.1",
+        "node-red-contrib-sunpos": "~1.4.1",
+        "node-red-node-email": "~1.12.3",
+        "node-red-node-openweathermap": "~0.5.0",
         "node-red": "3.0.2"
     },
     "engines": {

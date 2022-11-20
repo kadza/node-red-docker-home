@@ -1,19 +1,6888 @@
 [
     {
-        "id": "f6f2187d.f17ca8",
+        "id": "10842f61.22bf81",
         "type": "tab",
-        "label": "Flow 1",
+        "label": "Temperature",
         "disabled": false,
         "info": ""
     },
     {
-        "id": "3cc11d24.ff01a2",
-        "type": "comment",
-        "z": "f6f2187d.f17ca8",
-        "name": "WARNING: please check you have started this container with a volume that is mounted to /data\\n otherwise any flow changes are lost when you redeploy or upgrade the container\\n (e.g. upgrade to a more recent node-red docker image).\\n  If you are using named volumes you can ignore this warning.\\n Double click or see info side panel to learn how to start Node-RED in Docker to save your work",
-        "info": "\nTo start docker with a bind mount volume (-v option), for example:\n\n```\ndocker run -it -p 1880:1880 -v /home/user/node_red_data:/data --name mynodered nodered/node-red\n```\n\nwhere `/home/user/node_red_data` is a directory on your host machine where you want to store your flows.\n\nIf you do not do this then you can experiment and redploy flows, but if you restart or upgrade the container the flows will be disconnected and lost. \n\nThey will still exist in a hidden data volume, which can be recovered using standard docker techniques, but that is much more complex than just starting with a named volume as described above.",
+        "id": "88a0490b5ee9139a",
+        "type": "tab",
+        "label": "Lights",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "6bebbd23.6d57e4",
+        "type": "tab",
+        "label": "Ventillation",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "cbbff5e9.216548",
+        "type": "tab",
+        "label": "Weather",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "c1c0d025.7190c",
+        "type": "tab",
+        "label": "Blinds",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "34d5b010.8abea",
+        "type": "tab",
+        "label": "Test",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "718fa9b5c547047f",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "e9bffb56be35eddc",
+        "type": "tab",
+        "label": "Flow 2",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "13cbf77f.87a069",
+        "type": "subflow",
+        "name": "Recu read | InfluxDb",
+        "info": "",
+        "category": "",
+        "in": [],
+        "out": [],
+        "env": [
+            {
+                "name": "fieldName",
+                "type": "str",
+                "value": ""
+            },
+            {
+                "name": "measurementName",
+                "type": "str",
+                "value": ""
+            }
+        ],
+        "meta": {},
+        "color": "#DDAA99"
+    },
+    {
+        "id": "f33ae946a1b71124",
+        "type": "subflow",
+        "name": "Ampio read | InfluxDb",
+        "info": "",
+        "category": "",
+        "in": [],
+        "out": [
+            {
+                "x": 540,
+                "y": 160,
+                "wires": [
+                    {
+                        "id": "f036d4db5203aa3f",
+                        "port": 0
+                    }
+                ]
+            }
+        ],
+        "env": [
+            {
+                "name": "topic",
+                "type": "str",
+                "value": ""
+            },
+            {
+                "name": "measurement",
+                "type": "str",
+                "value": ""
+            }
+        ],
+        "meta": {},
+        "color": "#DDAA99"
+    },
+    {
+        "id": "51751d6da98303cc",
+        "type": "subflow",
+        "name": "Light",
+        "info": "",
+        "category": "",
+        "in": [
+            {
+                "x": 100,
+                "y": 200,
+                "wires": [
+                    {
+                        "id": "9f7d123a4b857c73"
+                    }
+                ]
+            }
+        ],
+        "out": [
+            {
+                "x": 280,
+                "y": 120,
+                "wires": [
+                    {
+                        "id": "a32469b7d115cbdf",
+                        "port": 0
+                    }
+                ]
+            }
+        ],
+        "env": [
+            {
+                "name": "toTopic",
+                "type": "str",
+                "value": ""
+            },
+            {
+                "name": "fromTopic",
+                "type": "str",
+                "value": ""
+            }
+        ],
+        "meta": {},
+        "color": "#DDAA99",
+        "status": {
+            "x": 280,
+            "y": 60,
+            "wires": [
+                {
+                    "id": "a32469b7d115cbdf",
+                    "port": 0
+                }
+            ]
+        }
+    },
+    {
+        "id": "610816c128f243ad",
+        "type": "subflow",
+        "name": "Homekit light",
+        "info": "",
+        "category": "",
+        "in": [
+            {
+                "x": 220,
+                "y": 160,
+                "wires": [
+                    {
+                        "id": "ed0357b5bee41ea8"
+                    }
+                ]
+            }
+        ],
+        "out": [
+            {
+                "x": 980,
+                "y": 160,
+                "wires": [
+                    {
+                        "id": "f5158827da42f628",
+                        "port": 0
+                    }
+                ]
+            }
+        ],
+        "env": [
+            {
+                "name": "name",
+                "type": "str",
+                "value": "unknown"
+            }
+        ],
+        "meta": {},
+        "color": "#DDAA99"
+    },
+    {
+        "id": "e506f30f36e9e788",
+        "type": "subflow",
+        "name": "Dimmer",
+        "info": "",
+        "category": "",
+        "in": [
+            {
+                "x": 60,
+                "y": 240,
+                "wires": [
+                    {
+                        "id": "3c5511a751a09c80"
+                    }
+                ]
+            }
+        ],
+        "out": [
+            {
+                "x": 220,
+                "y": 60,
+                "wires": [
+                    {
+                        "id": "d663a32c1717e786",
+                        "port": 0
+                    }
+                ]
+            },
+            {
+                "x": 220,
+                "y": 180,
+                "wires": [
+                    {
+                        "id": "994c5e9e7e21cc97",
+                        "port": 0
+                    }
+                ]
+            }
+        ],
+        "env": [
+            {
+                "name": "toTopic",
+                "type": "str",
+                "value": ""
+            },
+            {
+                "name": "isOnTopic",
+                "type": "str",
+                "value": ""
+            },
+            {
+                "name": "brightnessTopic",
+                "type": "str",
+                "value": ""
+            }
+        ],
+        "meta": {},
+        "color": "#DDAA99",
+        "status": {
+            "x": 220,
+            "y": 120,
+            "wires": [
+                {
+                    "id": "994c5e9e7e21cc97",
+                    "port": 0
+                }
+            ]
+        }
+    },
+    {
+        "id": "dc62f7ecac1d9b16",
+        "type": "subflow",
+        "name": "Homekit dimmer",
+        "info": "",
+        "category": "",
+        "in": [
+            {
+                "x": 80,
+                "y": 80,
+                "wires": [
+                    {
+                        "id": "5f15022815b340f0"
+                    }
+                ]
+            }
+        ],
+        "out": [
+            {
+                "x": 960,
+                "y": 80,
+                "wires": [
+                    {
+                        "id": "a9e8fafdf3b1eae0",
+                        "port": 0
+                    }
+                ]
+            }
+        ],
+        "env": [
+            {
+                "name": "name",
+                "type": "str",
+                "value": "unknown"
+            }
+        ],
+        "meta": {},
+        "color": "#DDAA99"
+    },
+    {
+        "id": "287d4de907eaa39d",
+        "type": "subflow",
+        "name": "Homekit temp",
+        "info": "",
+        "category": "",
+        "in": [
+            {
+                "x": 260,
+                "y": 160,
+                "wires": [
+                    {
+                        "id": "d7a782f79efcf546"
+                    }
+                ]
+            }
+        ],
+        "out": [],
+        "env": [
+            {
+                "name": "name",
+                "type": "str",
+                "value": "unknown"
+            }
+        ],
+        "meta": {},
+        "color": "#DDAA99"
+    },
+    {
+        "id": "49824722.da0c98",
+        "type": "influxdb",
+        "hostname": "localhost",
+        "port": "8086",
+        "protocol": "http",
+        "database": "sensors",
+        "name": "sensorsDb",
+        "usetls": false,
+        "tls": "",
+        "influxdbVersion": "1.x",
+        "url": "",
+        "rejectUnauthorized": false
+    },
+    {
+        "id": "8ed427c6.e1f408",
+        "type": "komfoventConfig",
+        "displayName": "recuperator",
+        "siteName": "home",
+        "ip": "192.168.1.127"
+    },
+    {
+        "id": "190e1795.e65c88",
+        "type": "mqtt-broker",
+        "name": "ampio",
+        "broker": "192.168.1.104",
+        "port": "1883",
+        "clientid": "",
+        "usetls": false,
+        "compatmode": false,
+        "protocolVersion": 4,
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": ""
+    },
+    {
+        "id": "3dcda60a.e5ff12",
+        "type": "homekit-bridge",
+        "bridgeName": "home",
+        "pinCode": "123-12-123",
+        "port": "",
+        "allowInsecureRequest": false,
+        "manufacturer": "NRCHKB",
+        "model": "0.120.5",
+        "serialNo": "Default Serial Number",
+        "firmwareRev": "0.120.5",
+        "hardwareRev": "0.120.5",
+        "softwareRev": "0.120.5",
+        "customMdnsConfig": false,
+        "mdnsMulticast": true,
+        "mdnsInterface": "",
+        "mdnsPort": "",
+        "mdnsIp": "",
+        "mdnsTtl": "",
+        "mdnsLoopback": true,
+        "mdnsReuseAddr": true,
+        "allowMessagePassthrough": true
+    },
+    {
+        "id": "c192e1aa.d5d25",
+        "type": "komfoventNodeGet",
+        "z": "13cbf77f.87a069",
+        "displayName": "get",
+        "user": "8ed427c6.e1f408",
         "x": 350,
         "y": 80,
+        "wires": [
+            [
+                "94f6a381.7aec7"
+            ]
+        ]
+    },
+    {
+        "id": "77ce07a2.3ee228",
+        "type": "inject",
+        "z": "13cbf77f.87a069",
+        "name": "fieldName",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "600",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "${fieldName}",
+        "payloadType": "str",
+        "x": 190,
+        "y": 80,
+        "wires": [
+            [
+                "c192e1aa.d5d25"
+            ]
+        ]
+    },
+    {
+        "id": "94f6a381.7aec7",
+        "type": "function",
+        "z": "13cbf77f.87a069",
+        "name": "deleteUnit",
+        "func": "const payload = msg.payload;\n\nif (!payload.error) {\n    const pollutedTempString = payload.result;\n    const spaceSignIndex = pollutedTempString.indexOf(' ');\n    if (spaceSignIndex > -1) {\n        const tempString = pollutedTempString.substring(0, spaceSignIndex);\n        const temp = parseFloat(tempString);\n        return { \n            payload: { \n                result: temp, \n                error: false\n            }\n        };\n    }\n}\n\nreturn { error: true }",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 510,
+        "y": 80,
+        "wires": [
+            [
+                "4a243c65.d60404"
+            ]
+        ]
+    },
+    {
+        "id": "1a47e54f.a1068b",
+        "type": "influxdb out",
+        "z": "13cbf77f.87a069",
+        "influxdb": "49824722.da0c98",
+        "name": "measurementName",
+        "measurement": "${measurementName}",
+        "precision": "",
+        "retentionPolicy": "",
+        "x": 890,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "4a243c65.d60404",
+        "type": "function",
+        "z": "13cbf77f.87a069",
+        "name": "parseFloat",
+        "func": "const payload = msg.payload;\n\nif (!payload.error) {\n    const temp = parseFloat(payload.result);\n    \n    return { payload: temp };\n}\n\nreturn { error: true }",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 690,
+        "y": 80,
+        "wires": [
+            [
+                "1a47e54f.a1068b"
+            ]
+        ]
+    },
+    {
+        "id": "4dea7daeb2a8b212",
+        "type": "influxdb out",
+        "z": "f33ae946a1b71124",
+        "influxdb": "49824722.da0c98",
+        "name": "measurement",
+        "measurement": "${measurement}",
+        "precision": "",
+        "retentionPolicy": "",
+        "database": "",
+        "retentionPolicyV18Flux": "",
+        "org": "",
+        "bucket": "",
+        "x": 600,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "f036d4db5203aa3f",
+        "type": "function",
+        "z": "f33ae946a1b71124",
+        "name": "parseFloat",
+        "func": "var floatValue = parseFloat(msg.payload,2);\n\nreturn { payload: floatValue };",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 390,
+        "y": 100,
+        "wires": [
+            [
+                "4dea7daeb2a8b212"
+            ]
+        ]
+    },
+    {
+        "id": "101d46602317c710",
+        "type": "mqtt in",
+        "z": "f33ae946a1b71124",
+        "name": "mqtt temp",
+        "topic": "${topic}",
+        "qos": "2",
+        "datatype": "auto",
+        "broker": "190e1795.e65c88",
+        "nl": false,
+        "rap": false,
+        "inputs": 0,
+        "x": 200,
+        "y": 100,
+        "wires": [
+            [
+                "f036d4db5203aa3f"
+            ]
+        ]
+    },
+    {
+        "id": "9f7d123a4b857c73",
+        "type": "mqtt out",
+        "z": "51751d6da98303cc",
+        "name": "light",
+        "topic": "${toTopic}",
+        "qos": "",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "190e1795.e65c88",
+        "x": 230,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "a32469b7d115cbdf",
+        "type": "mqtt in",
+        "z": "51751d6da98303cc",
+        "name": "light",
+        "topic": "${fromTopic}",
+        "qos": "2",
+        "datatype": "auto",
+        "broker": "190e1795.e65c88",
+        "nl": false,
+        "rap": false,
+        "inputs": 0,
+        "x": 110,
+        "y": 60,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "ed0357b5bee41ea8",
+        "type": "function",
+        "z": "610816c128f243ad",
+        "name": "numberToBool",
+        "func": "var isOn = (msg.payload == 0) ? false : true;\nreturn {\n    payload: { On : isOn }\n};",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 380,
+        "y": 160,
+        "wires": [
+            [
+                "5e83ecd559550c25"
+            ]
+        ]
+    },
+    {
+        "id": "f5158827da42f628",
+        "type": "function",
+        "z": "610816c128f243ad",
+        "name": "boolToNumber",
+        "func": "var isOnBinary = (msg.payload.On) ? 1 : 0;\nreturn {\n    payload: isOnBinary\n};",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 820,
+        "y": 160,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "5e83ecd559550c25",
+        "type": "homekit-service",
+        "z": "610816c128f243ad",
+        "isParent": true,
+        "hostType": "0",
+        "bridge": "3dcda60a.e5ff12",
+        "accessoryId": "",
+        "parentService": "",
+        "name": "${name}",
+        "serviceName": "Lightbulb",
+        "topic": "",
+        "filter": false,
+        "manufacturer": "NRCHKB",
+        "model": "1.4.3",
+        "serialNo": "Default Serial Number",
+        "firmwareRev": "1.4.3",
+        "hardwareRev": "1.4.3",
+        "softwareRev": "1.4.3",
+        "cameraConfigVideoProcessor": "ffmpeg",
+        "cameraConfigSource": "",
+        "cameraConfigStillImageSource": "",
+        "cameraConfigMaxStreams": 2,
+        "cameraConfigMaxWidth": 1280,
+        "cameraConfigMaxHeight": 720,
+        "cameraConfigMaxFPS": 10,
+        "cameraConfigMaxBitrate": 300,
+        "cameraConfigVideoCodec": "libx264",
+        "cameraConfigAudioCodec": "libfdk_aac",
+        "cameraConfigAudio": false,
+        "cameraConfigPacketSize": 1316,
+        "cameraConfigVerticalFlip": false,
+        "cameraConfigHorizontalFlip": false,
+        "cameraConfigMapVideo": "0:0",
+        "cameraConfigMapAudio": "0:1",
+        "cameraConfigVideoFilter": "scale=1280:720",
+        "cameraConfigAdditionalCommandLine": "-tune zerolatency",
+        "cameraConfigDebug": false,
+        "cameraConfigSnapshotOutput": "disabled",
+        "cameraConfigInterfaceName": "",
+        "characteristicProperties": "{}",
+        "waitForSetupMsg": false,
+        "outputs": 2,
+        "x": 580,
+        "y": 160,
+        "wires": [
+            [
+                "f5158827da42f628"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "3c5511a751a09c80",
+        "type": "mqtt out",
+        "z": "e506f30f36e9e788",
+        "name": "to",
+        "topic": "${toTopic}",
+        "qos": "",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "190e1795.e65c88",
+        "x": 190,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "d663a32c1717e786",
+        "type": "mqtt in",
+        "z": "e506f30f36e9e788",
+        "name": "is on",
+        "topic": "${isOnTopic}",
+        "qos": "2",
+        "datatype": "auto",
+        "broker": "190e1795.e65c88",
+        "nl": false,
+        "rap": false,
+        "inputs": 0,
+        "x": 90,
+        "y": 60,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "994c5e9e7e21cc97",
+        "type": "mqtt in",
+        "z": "e506f30f36e9e788",
+        "name": "brightness",
+        "topic": "${brightnessTopic}",
+        "qos": "2",
+        "datatype": "auto",
+        "broker": "190e1795.e65c88",
+        "nl": false,
+        "rap": false,
+        "inputs": 0,
+        "x": 100,
+        "y": 120,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "4feb22314e4f11ee",
+        "type": "homekit-service",
+        "z": "dc62f7ecac1d9b16",
+        "isParent": true,
+        "hostType": "0",
+        "bridge": "3dcda60a.e5ff12",
+        "accessoryId": "",
+        "parentService": "",
+        "name": "${name}",
+        "serviceName": "Lightbulb",
+        "topic": "",
+        "filter": false,
+        "manufacturer": "NRCHKB",
+        "model": "1.4.3",
+        "serialNo": "Default Serial Number",
+        "firmwareRev": "1.4.3",
+        "hardwareRev": "1.4.3",
+        "softwareRev": "1.4.3",
+        "cameraConfigVideoProcessor": "ffmpeg",
+        "cameraConfigSource": "",
+        "cameraConfigStillImageSource": "",
+        "cameraConfigMaxStreams": 2,
+        "cameraConfigMaxWidth": 1280,
+        "cameraConfigMaxHeight": 720,
+        "cameraConfigMaxFPS": 10,
+        "cameraConfigMaxBitrate": 300,
+        "cameraConfigVideoCodec": "libx264",
+        "cameraConfigAudioCodec": "libfdk_aac",
+        "cameraConfigAudio": false,
+        "cameraConfigPacketSize": 1316,
+        "cameraConfigVerticalFlip": false,
+        "cameraConfigHorizontalFlip": false,
+        "cameraConfigMapVideo": "0:0",
+        "cameraConfigMapAudio": "0:1",
+        "cameraConfigVideoFilter": "scale=1280:720",
+        "cameraConfigAdditionalCommandLine": "-tune zerolatency",
+        "cameraConfigDebug": false,
+        "cameraConfigSnapshotOutput": "disabled",
+        "cameraConfigInterfaceName": "",
+        "characteristicProperties": "{\"Brightness\":true}",
+        "waitForSetupMsg": false,
+        "outputs": 2,
+        "x": 520,
+        "y": 80,
+        "wires": [
+            [
+                "a9e8fafdf3b1eae0"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "5f15022815b340f0",
+        "type": "function",
+        "z": "dc62f7ecac1d9b16",
+        "name": "convertAmpioToHomekitInput",
+        "func": "var maxBrightness = 255;\nvar brightness = msg.payload;\nvar isOn = (brightness == 0) ? false : true;\nvar brightnessPercent = Math.round(brightness / maxBrightness * 100);\nreturn {\n    payload: { \n        \"On\" : isOn,\n        \"Brightness\": brightnessPercent,\n    }\n};",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 270,
+        "y": 80,
+        "wires": [
+            [
+                "4feb22314e4f11ee"
+            ]
+        ]
+    },
+    {
+        "id": "a9e8fafdf3b1eae0",
+        "type": "function",
+        "z": "dc62f7ecac1d9b16",
+        "name": "convertHomekitToAmpioOutput",
+        "func": "//ampio dimmer accepts single input 0 - 255;\n\nvar maxBrightness = 255;\nvar output = -1;\nif (msg.payload.On === true ) {\n    output = maxBrightness;\n} else if (msg.payload.On === false){\n    output = 0;\n} else if (msg.payload.Brightness != null) {\n    output = Math.ceil(msg.payload.Brightness / 100 * 255);\n}\nif(output != -1 ) {\n    return {\n        payload: output\n    };\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 770,
+        "y": 80,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "d7a782f79efcf546",
+        "type": "change",
+        "z": "287d4de907eaa39d",
+        "name": "mv payload to CurrentTemperature",
+        "rules": [
+            {
+                "t": "move",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload.CurrentTemperature",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 440,
+        "y": 160,
+        "wires": [
+            [
+                "45647de658a4a88f"
+            ]
+        ]
+    },
+    {
+        "id": "45647de658a4a88f",
+        "type": "homekit-service",
+        "z": "287d4de907eaa39d",
+        "isParent": true,
+        "hostType": "0",
+        "bridge": "3dcda60a.e5ff12",
+        "accessoryId": "",
+        "parentService": "",
+        "name": "${name}",
+        "serviceName": "TemperatureSensor",
+        "topic": "",
+        "filter": false,
+        "manufacturer": "NRCHKB",
+        "model": "1.4.3",
+        "serialNo": "Default Serial Number",
+        "firmwareRev": "1.4.3",
+        "hardwareRev": "1.4.3",
+        "softwareRev": "1.4.3",
+        "cameraConfigVideoProcessor": "ffmpeg",
+        "cameraConfigSource": "",
+        "cameraConfigStillImageSource": "",
+        "cameraConfigMaxStreams": 2,
+        "cameraConfigMaxWidth": 1280,
+        "cameraConfigMaxHeight": 720,
+        "cameraConfigMaxFPS": 10,
+        "cameraConfigMaxBitrate": 300,
+        "cameraConfigVideoCodec": "libx264",
+        "cameraConfigAudioCodec": "libfdk_aac",
+        "cameraConfigAudio": false,
+        "cameraConfigPacketSize": 1316,
+        "cameraConfigVerticalFlip": false,
+        "cameraConfigHorizontalFlip": false,
+        "cameraConfigMapVideo": "0:0",
+        "cameraConfigMapAudio": "0:1",
+        "cameraConfigVideoFilter": "scale=1280:720",
+        "cameraConfigAdditionalCommandLine": "-tune zerolatency",
+        "cameraConfigDebug": false,
+        "cameraConfigSnapshotOutput": "disabled",
+        "cameraConfigInterfaceName": "",
+        "characteristicProperties": "{}",
+        "waitForSetupMsg": false,
+        "outputs": 2,
+        "x": 660,
+        "y": 160,
+        "wires": [
+            [],
+            []
+        ]
+    },
+    {
+        "id": "49a1aedeb078827f",
+        "type": "subflow:f33ae946a1b71124",
+        "z": "10842f61.22bf81",
+        "name": "living temp",
+        "env": [
+            {
+                "name": "topic",
+                "value": "ampio/from/87C4/state/t/1",
+                "type": "str"
+            },
+            {
+                "name": "measurement",
+                "value": "salon/temp",
+                "type": "str"
+            },
+            {
+                "name": "deviceId",
+                "value": "87C4",
+                "type": "str"
+            },
+            {
+                "name": "sensorId",
+                "value": "1",
+                "type": "str"
+            },
+            {
+                "name": "dbId",
+                "value": "salon/temp",
+                "type": "str"
+            }
+        ],
+        "x": 200,
+        "y": 80,
+        "wires": [
+            [
+                "0ac57dd6accbf541"
+            ]
+        ]
+    },
+    {
+        "id": "ce307197fe24dbec",
+        "type": "subflow:f33ae946a1b71124",
+        "z": "10842f61.22bf81",
+        "name": "child S temp",
+        "env": [
+            {
+                "name": "topic",
+                "value": "ampio/from/87C5/state/t/1",
+                "type": "str"
+            },
+            {
+                "name": "measurement",
+                "value": "blanka/temp",
+                "type": "str"
+            },
+            {
+                "name": "deviceId",
+                "value": "87C5",
+                "type": "str"
+            },
+            {
+                "name": "sensorId",
+                "value": "1",
+                "type": "str"
+            },
+            {
+                "name": "dbId",
+                "value": "salon/temp",
+                "type": "str"
+            }
+        ],
+        "x": 210,
+        "y": 120,
+        "wires": [
+            [
+                "86cce069d80c6760"
+            ]
+        ]
+    },
+    {
+        "id": "2c33d5ad56c90af6",
+        "type": "subflow:f33ae946a1b71124",
+        "z": "10842f61.22bf81",
+        "name": "child N temp",
+        "env": [
+            {
+                "name": "topic",
+                "value": "ampio/from/87C5/state/t/2",
+                "type": "str"
+            },
+            {
+                "name": "measurement",
+                "value": "leon/temp",
+                "type": "str"
+            },
+            {
+                "name": "deviceId",
+                "value": "87C5",
+                "type": "str"
+            },
+            {
+                "name": "sensorId",
+                "value": "2",
+                "type": "str"
+            },
+            {
+                "name": "dbId",
+                "value": "salon/temp",
+                "type": "str"
+            }
+        ],
+        "x": 210,
+        "y": 160,
+        "wires": [
+            [
+                "67f3c4478740e758"
+            ]
+        ]
+    },
+    {
+        "id": "9dab98f92fe9eada",
+        "type": "subflow:f33ae946a1b71124",
+        "z": "10842f61.22bf81",
+        "name": "hall 1 temp",
+        "env": [
+            {
+                "name": "topic",
+                "value": "ampio/from/87C5/state/t/3",
+                "type": "str"
+            },
+            {
+                "name": "measurement",
+                "value": "holpietro/temp",
+                "type": "str"
+            },
+            {
+                "name": "deviceId",
+                "value": "87C5",
+                "type": "str"
+            },
+            {
+                "name": "sensorId",
+                "value": "3",
+                "type": "str"
+            },
+            {
+                "name": "dbId",
+                "value": "salon/temp",
+                "type": "str"
+            }
+        ],
+        "x": 200,
+        "y": 200,
+        "wires": [
+            [
+                "a568404f6c5325b9"
+            ]
+        ]
+    },
+    {
+        "id": "60cfb1ab5f22b5f4",
+        "type": "subflow:f33ae946a1b71124",
+        "z": "10842f61.22bf81",
+        "name": "entrance temp",
+        "env": [
+            {
+                "name": "topic",
+                "value": "ampio/from/87C7/state/t/1",
+                "type": "str"
+            },
+            {
+                "name": "measurement",
+                "value": "entrance/temp",
+                "type": "str"
+            },
+            {
+                "name": "deviceId",
+                "value": "87C7",
+                "type": "str"
+            },
+            {
+                "name": "sensorId",
+                "value": "1",
+                "type": "str"
+            },
+            {
+                "name": "dbId",
+                "value": "salon/temp",
+                "type": "str"
+            }
+        ],
+        "x": 220,
+        "y": 240,
+        "wires": [
+            [
+                "7b7afcafdd67c31b"
+            ]
+        ]
+    },
+    {
+        "id": "c2fba12d824295aa",
+        "type": "subflow:f33ae946a1b71124",
+        "z": "10842f61.22bf81",
+        "name": "bedroom temp",
+        "env": [
+            {
+                "name": "topic",
+                "value": "ampio/from/87C4/state/t/1",
+                "type": "str"
+            },
+            {
+                "name": "measurement",
+                "value": "bedroom/temp",
+                "type": "str"
+            },
+            {
+                "name": "deviceId",
+                "value": "87C7",
+                "type": "str"
+            },
+            {
+                "name": "sensorId",
+                "value": "1",
+                "type": "str"
+            },
+            {
+                "name": "dbId",
+                "value": "salon/temp",
+                "type": "str"
+            }
+        ],
+        "x": 220,
+        "y": 280,
+        "wires": [
+            [
+                "f41e0ee9fa18799b"
+            ]
+        ]
+    },
+    {
+        "id": "987d20203747cd46",
+        "type": "subflow:f33ae946a1b71124",
+        "z": "10842f61.22bf81",
+        "name": "bath 1 temp",
+        "env": [
+            {
+                "name": "topic",
+                "value": "ampio/from/87CC/state/t/1",
+                "type": "str"
+            },
+            {
+                "name": "measurement",
+                "value": "bath1/temp",
+                "type": "str"
+            },
+            {
+                "name": "deviceId",
+                "value": "87C7",
+                "type": "str"
+            },
+            {
+                "name": "sensorId",
+                "value": "1",
+                "type": "str"
+            },
+            {
+                "name": "dbId",
+                "value": "salon/temp",
+                "type": "str"
+            }
+        ],
+        "x": 210,
+        "y": 320,
+        "wires": [
+            [
+                "a369ce3d5dd9f613"
+            ]
+        ]
+    },
+    {
+        "id": "05cb59878a9beb5a",
+        "type": "subflow:f33ae946a1b71124",
+        "z": "10842f61.22bf81",
+        "name": "laundry temp",
+        "env": [
+            {
+                "name": "topic",
+                "value": "ampio/from/87CC/state/t/2",
+                "type": "str"
+            },
+            {
+                "name": "measurement",
+                "value": "laundry/temp",
+                "type": "str"
+            },
+            {
+                "name": "deviceId",
+                "value": "87C7",
+                "type": "str"
+            },
+            {
+                "name": "sensorId",
+                "value": "1",
+                "type": "str"
+            },
+            {
+                "name": "dbId",
+                "value": "salon/temp",
+                "type": "str"
+            }
+        ],
+        "x": 210,
+        "y": 360,
+        "wires": [
+            [
+                "43431030a6acf869"
+            ]
+        ]
+    },
+    {
+        "id": "4f15b406b77d3fe8",
+        "type": "subflow:f33ae946a1b71124",
+        "z": "10842f61.22bf81",
+        "name": "bath 0 temp",
+        "env": [
+            {
+                "name": "topic",
+                "value": "ampio/from/87D2/state/t/1",
+                "type": "str"
+            },
+            {
+                "name": "measurement",
+                "value": "bath0/temp",
+                "type": "str"
+            },
+            {
+                "name": "deviceId",
+                "value": "87C7",
+                "type": "str"
+            },
+            {
+                "name": "sensorId",
+                "value": "1",
+                "type": "str"
+            },
+            {
+                "name": "dbId",
+                "value": "salon/temp",
+                "type": "str"
+            }
+        ],
+        "x": 210,
+        "y": 400,
+        "wires": [
+            [
+                "8df17e12562fa8c1"
+            ]
+        ]
+    },
+    {
+        "id": "a03a6c9d0d2f6c1e",
+        "type": "subflow:f33ae946a1b71124",
+        "z": "10842f61.22bf81",
+        "name": "guest temp",
+        "env": [
+            {
+                "name": "topic",
+                "value": "ampio/from/87D2/state/t/2",
+                "type": "str"
+            },
+            {
+                "name": "measurement",
+                "value": "guest/temp",
+                "type": "str"
+            },
+            {
+                "name": "deviceId",
+                "value": "87C7",
+                "type": "str"
+            },
+            {
+                "name": "sensorId",
+                "value": "1",
+                "type": "str"
+            },
+            {
+                "name": "dbId",
+                "value": "salon/temp",
+                "type": "str"
+            }
+        ],
+        "x": 210,
+        "y": 440,
+        "wires": [
+            [
+                "d7b2344f9fc34cbe"
+            ]
+        ]
+    },
+    {
+        "id": "bca0395218f14aeb",
+        "type": "subflow:f33ae946a1b71124",
+        "z": "10842f61.22bf81",
+        "name": "store temp",
+        "env": [
+            {
+                "name": "topic",
+                "value": "ampio/from/87D2/state/t/3",
+                "type": "str"
+            },
+            {
+                "name": "measurement",
+                "value": "store/temp",
+                "type": "str"
+            },
+            {
+                "name": "deviceId",
+                "value": "87C7",
+                "type": "str"
+            },
+            {
+                "name": "sensorId",
+                "value": "1",
+                "type": "str"
+            },
+            {
+                "name": "dbId",
+                "value": "salon/temp",
+                "type": "str"
+            }
+        ],
+        "x": 200,
+        "y": 480,
+        "wires": [
+            [
+                "353dd3fdaa4cd44a"
+            ]
+        ]
+    },
+    {
+        "id": "95eceeb51a351eaf",
+        "type": "subflow:f33ae946a1b71124",
+        "z": "10842f61.22bf81",
+        "name": "wardrobe temp",
+        "env": [
+            {
+                "name": "topic",
+                "value": "ampio/from/87C4/state/t/2",
+                "type": "str"
+            },
+            {
+                "name": "measurement",
+                "value": "wardrobe/temp",
+                "type": "str"
+            },
+            {
+                "name": "deviceId",
+                "value": "87C7",
+                "type": "str"
+            },
+            {
+                "name": "sensorId",
+                "value": "1",
+                "type": "str"
+            },
+            {
+                "name": "dbId",
+                "value": "salon/temp",
+                "type": "str"
+            }
+        ],
+        "x": 220,
+        "y": 520,
+        "wires": [
+            [
+                "402bd8223745dab3"
+            ]
+        ]
+    },
+    {
+        "id": "a83f69a2f95a02c6",
+        "type": "subflow:f33ae946a1b71124",
+        "z": "10842f61.22bf81",
+        "name": "external temp",
+        "env": [
+            {
+                "name": "topic",
+                "value": "ampio/from/87C4/state/t/3",
+                "type": "str"
+            },
+            {
+                "name": "measurement",
+                "value": "external/temp",
+                "type": "str"
+            },
+            {
+                "name": "deviceId",
+                "value": "87C7",
+                "type": "str"
+            },
+            {
+                "name": "sensorId",
+                "value": "1",
+                "type": "str"
+            },
+            {
+                "name": "dbId",
+                "value": "salon/temp",
+                "type": "str"
+            }
+        ],
+        "x": 210,
+        "y": 560,
+        "wires": [
+            [
+                "7dabc2d7639d5d85"
+            ]
+        ]
+    },
+    {
+        "id": "29d0618eb44342c2",
+        "type": "subflow:f33ae946a1b71124",
+        "z": "10842f61.22bf81",
+        "name": "boiler temp",
+        "env": [
+            {
+                "name": "topic",
+                "value": "ampio/from/0001/state/t/2",
+                "type": "str"
+            },
+            {
+                "name": "measurement",
+                "value": "boiler/temp",
+                "type": "str"
+            },
+            {
+                "name": "deviceId",
+                "value": "87C7",
+                "type": "str"
+            },
+            {
+                "name": "sensorId",
+                "value": "1",
+                "type": "str"
+            },
+            {
+                "name": "dbId",
+                "value": "salon/temp",
+                "type": "str"
+            }
+        ],
+        "x": 210,
+        "y": 600,
+        "wires": [
+            [
+                "d69be5f6d8b290ea"
+            ]
+        ]
+    },
+    {
+        "id": "f94065d494643a5b",
+        "type": "subflow:f33ae946a1b71124",
+        "z": "10842f61.22bf81",
+        "name": "guest valve",
+        "env": [
+            {
+                "name": "topic",
+                "value": "ampio/from/87C4/state/o/2",
+                "type": "str"
+            },
+            {
+                "name": "measurement",
+                "value": "guest/heat/valve",
+                "type": "str"
+            },
+            {
+                "name": "deviceId",
+                "value": "87C7",
+                "type": "str"
+            },
+            {
+                "name": "sensorId",
+                "value": "1",
+                "type": "str"
+            },
+            {
+                "name": "dbId",
+                "value": "salon/temp",
+                "type": "str"
+            }
+        ],
+        "x": 730,
+        "y": 80,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "c76a5d0337b00e37",
+        "type": "subflow:f33ae946a1b71124",
+        "z": "10842f61.22bf81",
+        "name": "garage valve",
+        "env": [
+            {
+                "name": "topic",
+                "value": "ampio/from/87C4/state/o/1",
+                "type": "str"
+            },
+            {
+                "name": "measurement",
+                "value": "garage/heat/valve",
+                "type": "str"
+            },
+            {
+                "name": "deviceId",
+                "value": "87C7",
+                "type": "str"
+            },
+            {
+                "name": "sensorId",
+                "value": "1",
+                "type": "str"
+            },
+            {
+                "name": "dbId",
+                "value": "salon/temp",
+                "type": "str"
+            }
+        ],
+        "x": 730,
+        "y": 120,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "1b7a48b7b3d06ba4",
+        "type": "subflow:f33ae946a1b71124",
+        "z": "10842f61.22bf81",
+        "name": "bath 0 valve",
+        "env": [
+            {
+                "name": "topic",
+                "value": "ampio/from/87C4/state/o/3",
+                "type": "str"
+            },
+            {
+                "name": "measurement",
+                "value": "bath0/heat/valve",
+                "type": "str"
+            },
+            {
+                "name": "deviceId",
+                "value": "87C7",
+                "type": "str"
+            },
+            {
+                "name": "sensorId",
+                "value": "1",
+                "type": "str"
+            },
+            {
+                "name": "dbId",
+                "value": "salon/temp",
+                "type": "str"
+            }
+        ],
+        "x": 730,
+        "y": 160,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "3dd345bcbd1b43fa",
+        "type": "subflow:f33ae946a1b71124",
+        "z": "10842f61.22bf81",
+        "name": "living valve",
+        "env": [
+            {
+                "name": "topic",
+                "value": "ampio/from/87C4/state/o/4",
+                "type": "str"
+            },
+            {
+                "name": "measurement",
+                "value": "living/heat/valve",
+                "type": "str"
+            },
+            {
+                "name": "deviceId",
+                "value": "87C7",
+                "type": "str"
+            },
+            {
+                "name": "sensorId",
+                "value": "1",
+                "type": "str"
+            },
+            {
+                "name": "dbId",
+                "value": "salon/temp",
+                "type": "str"
+            }
+        ],
+        "x": 720,
+        "y": 200,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "d23abe933ec328bb",
+        "type": "subflow:f33ae946a1b71124",
+        "z": "10842f61.22bf81",
+        "name": "entrance valve",
+        "env": [
+            {
+                "name": "topic",
+                "value": "ampio/from/87C4/state/o/5",
+                "type": "str"
+            },
+            {
+                "name": "measurement",
+                "value": "entrance/heat/valve",
+                "type": "str"
+            },
+            {
+                "name": "deviceId",
+                "value": "87C7",
+                "type": "str"
+            },
+            {
+                "name": "sensorId",
+                "value": "1",
+                "type": "str"
+            },
+            {
+                "name": "dbId",
+                "value": "salon/temp",
+                "type": "str"
+            }
+        ],
+        "x": 740,
+        "y": 240,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "f310ef11291a1dd3",
+        "type": "subflow:f33ae946a1b71124",
+        "z": "10842f61.22bf81",
+        "name": "bath 1 valve",
+        "env": [
+            {
+                "name": "topic",
+                "value": "ampio/from/87C4/state/o/6",
+                "type": "str"
+            },
+            {
+                "name": "measurement",
+                "value": "bath1/heat/valve",
+                "type": "str"
+            },
+            {
+                "name": "deviceId",
+                "value": "87C7",
+                "type": "str"
+            },
+            {
+                "name": "sensorId",
+                "value": "1",
+                "type": "str"
+            },
+            {
+                "name": "dbId",
+                "value": "salon/temp",
+                "type": "str"
+            }
+        ],
+        "x": 730,
+        "y": 280,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "7dabc2d7639d5d85",
+        "type": "subflow:287d4de907eaa39d",
+        "z": "10842f61.22bf81",
+        "name": "",
+        "env": [
+            {
+                "name": "name",
+                "value": "external temp",
+                "type": "str"
+            }
+        ],
+        "x": 420,
+        "y": 560,
+        "wires": []
+    },
+    {
+        "id": "0ac57dd6accbf541",
+        "type": "subflow:287d4de907eaa39d",
+        "z": "10842f61.22bf81",
+        "name": "",
+        "env": [
+            {
+                "name": "name",
+                "value": "living temp",
+                "type": "str"
+            }
+        ],
+        "x": 420,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "86cce069d80c6760",
+        "type": "subflow:287d4de907eaa39d",
+        "z": "10842f61.22bf81",
+        "name": "",
+        "env": [
+            {
+                "name": "name",
+                "value": "Blanka temp",
+                "type": "str"
+            }
+        ],
+        "x": 420,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "67f3c4478740e758",
+        "type": "subflow:287d4de907eaa39d",
+        "z": "10842f61.22bf81",
+        "name": "",
+        "env": [
+            {
+                "name": "name",
+                "value": "Leon temp",
+                "type": "str"
+            }
+        ],
+        "x": 420,
+        "y": 160,
+        "wires": []
+    },
+    {
+        "id": "a568404f6c5325b9",
+        "type": "subflow:287d4de907eaa39d",
+        "z": "10842f61.22bf81",
+        "name": "",
+        "env": [
+            {
+                "name": "name",
+                "value": "hall 1 temp",
+                "type": "str"
+            }
+        ],
+        "x": 420,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "7b7afcafdd67c31b",
+        "type": "subflow:287d4de907eaa39d",
+        "z": "10842f61.22bf81",
+        "name": "",
+        "env": [
+            {
+                "name": "name",
+                "value": "entrance temp",
+                "type": "str"
+            }
+        ],
+        "x": 420,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "f41e0ee9fa18799b",
+        "type": "subflow:287d4de907eaa39d",
+        "z": "10842f61.22bf81",
+        "name": "",
+        "env": [
+            {
+                "name": "name",
+                "value": "bedroom temp",
+                "type": "str"
+            }
+        ],
+        "x": 420,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "a369ce3d5dd9f613",
+        "type": "subflow:287d4de907eaa39d",
+        "z": "10842f61.22bf81",
+        "name": "",
+        "env": [
+            {
+                "name": "name",
+                "value": "bath 1 temp",
+                "type": "str"
+            }
+        ],
+        "x": 420,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "43431030a6acf869",
+        "type": "subflow:287d4de907eaa39d",
+        "z": "10842f61.22bf81",
+        "name": "",
+        "env": [
+            {
+                "name": "name",
+                "value": "laundry temp",
+                "type": "str"
+            }
+        ],
+        "x": 420,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "8df17e12562fa8c1",
+        "type": "subflow:287d4de907eaa39d",
+        "z": "10842f61.22bf81",
+        "name": "",
+        "env": [
+            {
+                "name": "name",
+                "value": "bath 0 temp",
+                "type": "str"
+            }
+        ],
+        "x": 420,
+        "y": 400,
+        "wires": []
+    },
+    {
+        "id": "d7b2344f9fc34cbe",
+        "type": "subflow:287d4de907eaa39d",
+        "z": "10842f61.22bf81",
+        "name": "",
+        "env": [
+            {
+                "name": "name",
+                "value": "guest temp",
+                "type": "str"
+            }
+        ],
+        "x": 420,
+        "y": 440,
+        "wires": []
+    },
+    {
+        "id": "353dd3fdaa4cd44a",
+        "type": "subflow:287d4de907eaa39d",
+        "z": "10842f61.22bf81",
+        "name": "",
+        "env": [
+            {
+                "name": "name",
+                "value": "store temp",
+                "type": "str"
+            }
+        ],
+        "x": 420,
+        "y": 480,
+        "wires": []
+    },
+    {
+        "id": "402bd8223745dab3",
+        "type": "subflow:287d4de907eaa39d",
+        "z": "10842f61.22bf81",
+        "name": "",
+        "env": [
+            {
+                "name": "name",
+                "value": "wardrobe temp",
+                "type": "str"
+            }
+        ],
+        "x": 420,
+        "y": 520,
+        "wires": []
+    },
+    {
+        "id": "d69be5f6d8b290ea",
+        "type": "subflow:287d4de907eaa39d",
+        "z": "10842f61.22bf81",
+        "name": "",
+        "env": [
+            {
+                "name": "name",
+                "value": "boiler temp",
+                "type": "str"
+            }
+        ],
+        "x": 420,
+        "y": 600,
+        "wires": []
+    },
+    {
+        "id": "d2fb60fe1a0c4264",
+        "type": "inject",
+        "z": "88a0490b5ee9139a",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "1",
+        "payloadType": "num",
+        "x": 150,
+        "y": 220,
+        "wires": [
+            [
+                "5cbddeec3ebca9d3"
+            ]
+        ]
+    },
+    {
+        "id": "26e92cb7cd673338",
+        "type": "inject",
+        "z": "88a0490b5ee9139a",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "0",
+        "payloadType": "num",
+        "x": 150,
+        "y": 180,
+        "wires": [
+            [
+                "5cbddeec3ebca9d3"
+            ]
+        ]
+    },
+    {
+        "id": "c4b1fc758e361eda",
+        "type": "inject",
+        "z": "88a0490b5ee9139a",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "1",
+        "payloadType": "num",
+        "x": 150,
+        "y": 700,
+        "wires": [
+            [
+                "5ad37faa489a2055"
+            ]
+        ]
+    },
+    {
+        "id": "87cdb75cf77255c6",
+        "type": "inject",
+        "z": "88a0490b5ee9139a",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "0",
+        "payloadType": "num",
+        "x": 150,
+        "y": 660,
+        "wires": [
+            [
+                "5ad37faa489a2055"
+            ]
+        ]
+    },
+    {
+        "id": "2d8c1f4c1a5eef21",
+        "type": "inject",
+        "z": "88a0490b5ee9139a",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "0",
+        "payloadType": "num",
+        "x": 150,
+        "y": 60,
+        "wires": [
+            [
+                "3c91b6ce90d96811"
+            ]
+        ]
+    },
+    {
+        "id": "5f472c37e0afa7a7",
+        "type": "inject",
+        "z": "88a0490b5ee9139a",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "255",
+        "payloadType": "num",
+        "x": 150,
+        "y": 140,
+        "wires": [
+            [
+                "3c91b6ce90d96811"
+            ]
+        ]
+    },
+    {
+        "id": "f9cf6eb21ebb1f38",
+        "type": "inject",
+        "z": "88a0490b5ee9139a",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "1",
+        "payloadType": "num",
+        "x": 150,
+        "y": 300,
+        "wires": [
+            [
+                "1a2e6fb410d9c33b"
+            ]
+        ]
+    },
+    {
+        "id": "3fe23f9c68454879",
+        "type": "inject",
+        "z": "88a0490b5ee9139a",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "0",
+        "payloadType": "num",
+        "x": 150,
+        "y": 260,
+        "wires": [
+            [
+                "1a2e6fb410d9c33b"
+            ]
+        ]
+    },
+    {
+        "id": "ad86f2e14605cd29",
+        "type": "inject",
+        "z": "88a0490b5ee9139a",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "1",
+        "payloadType": "num",
+        "x": 150,
+        "y": 380,
+        "wires": [
+            [
+                "27957a451118d5a1"
+            ]
+        ]
+    },
+    {
+        "id": "f22caba087911c84",
+        "type": "inject",
+        "z": "88a0490b5ee9139a",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "0",
+        "payloadType": "num",
+        "x": 150,
+        "y": 340,
+        "wires": [
+            [
+                "27957a451118d5a1"
+            ]
+        ]
+    },
+    {
+        "id": "b27ddb7dd5ab9cfd",
+        "type": "mqtt in",
+        "z": "88a0490b5ee9139a",
+        "name": "guest sensor",
+        "topic": "ampio/from/7FA7/state/bi/8",
+        "qos": "2",
+        "datatype": "auto",
+        "broker": "190e1795.e65c88",
+        "nl": false,
+        "rap": false,
+        "inputs": 0,
+        "x": 930,
+        "y": 120,
+        "wires": [
+            [
+                "d9406fe4f2d08df2"
+            ]
+        ]
+    },
+    {
+        "id": "d9406fe4f2d08df2",
+        "type": "trigger",
+        "z": "88a0490b5ee9139a",
+        "name": "",
+        "op1": "",
+        "op2": "0",
+        "op1type": "nul",
+        "op2type": "str",
+        "duration": "1",
+        "extend": false,
+        "overrideDelay": false,
+        "units": "hr",
+        "reset": "1",
+        "bytopic": "all",
+        "topic": "topic",
+        "outputs": 1,
+        "x": 1130,
+        "y": 120,
+        "wires": [
+            [
+                "ce0cd4340f07d2ab"
+            ]
+        ]
+    },
+    {
+        "id": "6423525f0b11054c",
+        "type": "inject",
+        "z": "88a0490b5ee9139a",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "0",
+        "payloadType": "num",
+        "x": 150,
+        "y": 820,
+        "wires": [
+            [
+                "44cfcc2ed0e90e51"
+            ]
+        ]
+    },
+    {
+        "id": "70cb3e69addc699d",
+        "type": "inject",
+        "z": "88a0490b5ee9139a",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "1",
+        "payloadType": "num",
+        "x": 150,
+        "y": 860,
+        "wires": [
+            [
+                "44cfcc2ed0e90e51"
+            ]
+        ]
+    },
+    {
+        "id": "c99de35adbae173f",
+        "type": "inject",
+        "z": "88a0490b5ee9139a",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "0",
+        "payloadType": "num",
+        "x": 150,
+        "y": 740,
+        "wires": [
+            [
+                "170032a92c297c86"
+            ]
+        ]
+    },
+    {
+        "id": "d36ac266da62e0e6",
+        "type": "inject",
+        "z": "88a0490b5ee9139a",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "1",
+        "payloadType": "num",
+        "x": 150,
+        "y": 780,
+        "wires": [
+            [
+                "170032a92c297c86"
+            ]
+        ]
+    },
+    {
+        "id": "40629b994a7a0dfd",
+        "type": "mqtt in",
+        "z": "88a0490b5ee9139a",
+        "name": "blanka sensor",
+        "topic": "ampio/from/7FA7/state/bi/4",
+        "qos": "2",
+        "datatype": "auto",
+        "broker": "190e1795.e65c88",
+        "nl": false,
+        "rap": false,
+        "inputs": 0,
+        "x": 930,
+        "y": 200,
+        "wires": [
+            [
+                "5e850ebec75c0720"
+            ]
+        ]
+    },
+    {
+        "id": "5e850ebec75c0720",
+        "type": "trigger",
+        "z": "88a0490b5ee9139a",
+        "name": "",
+        "op1": "",
+        "op2": "0",
+        "op1type": "nul",
+        "op2type": "str",
+        "duration": "1",
+        "extend": false,
+        "overrideDelay": false,
+        "units": "hr",
+        "reset": "1",
+        "bytopic": "all",
+        "topic": "topic",
+        "outputs": 1,
+        "x": 1130,
+        "y": 200,
+        "wires": [
+            [
+                "2f4205ade48466dc",
+                "ae8507ea0ae92f4f"
+            ]
+        ]
+    },
+    {
+        "id": "bc5e5619944ba8c6",
+        "type": "mqtt in",
+        "z": "88a0490b5ee9139a",
+        "name": "leon sensor",
+        "topic": "ampio/from/7FA7/state/bi/13",
+        "qos": "2",
+        "datatype": "auto",
+        "broker": "190e1795.e65c88",
+        "nl": false,
+        "rap": false,
+        "inputs": 0,
+        "x": 930,
+        "y": 320,
+        "wires": [
+            [
+                "a82c084291153d74"
+            ]
+        ]
+    },
+    {
+        "id": "a82c084291153d74",
+        "type": "trigger",
+        "z": "88a0490b5ee9139a",
+        "name": "",
+        "op1": "",
+        "op2": "0",
+        "op1type": "nul",
+        "op2type": "str",
+        "duration": "2",
+        "extend": false,
+        "overrideDelay": false,
+        "units": "hr",
+        "reset": "1",
+        "bytopic": "all",
+        "topic": "topic",
+        "outputs": 1,
+        "x": 1130,
+        "y": 320,
+        "wires": [
+            [
+                "87aa4a92d4e5b873",
+                "10cb0fcaff5a1a62"
+            ]
+        ]
+    },
+    {
+        "id": "d5ec83a2b9f89a70",
+        "type": "inject",
+        "z": "88a0490b5ee9139a",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "0",
+        "payloadType": "num",
+        "x": 150,
+        "y": 980,
+        "wires": [
+            [
+                "2fddb551df0cba1a"
+            ]
+        ]
+    },
+    {
+        "id": "5d374b60711c5a37",
+        "type": "inject",
+        "z": "88a0490b5ee9139a",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "1",
+        "payloadType": "num",
+        "x": 150,
+        "y": 1020,
+        "wires": [
+            [
+                "2fddb551df0cba1a"
+            ]
+        ]
+    },
+    {
+        "id": "ac98f29ba6710a3d",
+        "type": "inject",
+        "z": "88a0490b5ee9139a",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "0",
+        "payloadType": "num",
+        "x": 150,
+        "y": 900,
+        "wires": [
+            [
+                "bb9e60177519183b"
+            ]
+        ]
+    },
+    {
+        "id": "10aa70e161befe74",
+        "type": "inject",
+        "z": "88a0490b5ee9139a",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "1",
+        "payloadType": "num",
+        "x": 150,
+        "y": 940,
+        "wires": [
+            [
+                "bb9e60177519183b"
+            ]
+        ]
+    },
+    {
+        "id": "27957a451118d5a1",
+        "type": "subflow:51751d6da98303cc",
+        "z": "88a0490b5ee9139a",
+        "name": "dining light",
+        "env": [
+            {
+                "name": "toTopic",
+                "value": "ampio/to/87D2/o/2/cmd",
+                "type": "str"
+            },
+            {
+                "name": "fromTopic",
+                "value": "ampio/from/87D2/state/o/2",
+                "type": "str"
+            }
+        ],
+        "x": 390,
+        "y": 360,
+        "wires": [
+            [
+                "24613e36664826d9"
+            ]
+        ]
+    },
+    {
+        "id": "5ad37faa489a2055",
+        "type": "subflow:51751d6da98303cc",
+        "z": "88a0490b5ee9139a",
+        "name": "guest light",
+        "env": [
+            {
+                "name": "toTopic",
+                "value": "ampio/to/87C7/o/6/cmd",
+                "type": "str"
+            },
+            {
+                "name": "fromTopic",
+                "value": "ampio/from/87C7/state/o/6",
+                "type": "str"
+            },
+            {
+                "name": "inputTopic",
+                "value": "${guest_ceiling_light_topic_to}",
+                "type": "str"
+            },
+            {
+                "name": "outputTopic",
+                "value": "{guest_ceiling_light_topic_from}",
+                "type": "str"
+            }
+        ],
+        "x": 390,
+        "y": 680,
+        "wires": [
+            [
+                "47f2dbe2efce9935"
+            ]
+        ]
+    },
+    {
+        "id": "170032a92c297c86",
+        "type": "subflow:51751d6da98303cc",
+        "z": "88a0490b5ee9139a",
+        "name": "blanka wall light",
+        "env": [
+            {
+                "name": "toTopic",
+                "value": "ampio/to/87C5/o/2/cmd",
+                "type": "str"
+            },
+            {
+                "name": "fromTopic",
+                "value": "ampio/from/87C5/state/o/2",
+                "type": "str"
+            }
+        ],
+        "x": 400,
+        "y": 760,
+        "wires": [
+            [
+                "fa13b0acc81074f2"
+            ]
+        ]
+    },
+    {
+        "id": "44cfcc2ed0e90e51",
+        "type": "subflow:51751d6da98303cc",
+        "z": "88a0490b5ee9139a",
+        "name": "blanka ceiling light",
+        "env": [
+            {
+                "name": "toTopic",
+                "value": "ampio/to/87C5/o/1/cmd",
+                "type": "str"
+            },
+            {
+                "name": "fromTopic",
+                "value": "ampio/from/87C5/state/o/1",
+                "type": "str"
+            }
+        ],
+        "x": 410,
+        "y": 840,
+        "wires": [
+            [
+                "916cbca802f99689"
+            ]
+        ]
+    },
+    {
+        "id": "bb9e60177519183b",
+        "type": "subflow:51751d6da98303cc",
+        "z": "88a0490b5ee9139a",
+        "name": "leon wall light",
+        "env": [
+            {
+                "name": "toTopic",
+                "value": "ampio/to/87C5/o/4/cmd",
+                "type": "str"
+            },
+            {
+                "name": "fromTopic",
+                "value": "ampio/from/87C5/state/o/4",
+                "type": "str"
+            }
+        ],
+        "x": 400,
+        "y": 920,
+        "wires": [
+            [
+                "ed66579615c3fd56"
+            ]
+        ]
+    },
+    {
+        "id": "2fddb551df0cba1a",
+        "type": "subflow:51751d6da98303cc",
+        "z": "88a0490b5ee9139a",
+        "name": "leon ceiling light",
+        "env": [
+            {
+                "name": "toTopic",
+                "value": "ampio/to/87C5/o/3/cmd",
+                "type": "str"
+            },
+            {
+                "name": "fromTopic",
+                "value": "ampio/from/87C5/state/o/3",
+                "type": "str"
+            }
+        ],
+        "x": 400,
+        "y": 1000,
+        "wires": [
+            [
+                "e4b53a2e7de9e1f0"
+            ]
+        ]
+    },
+    {
+        "id": "1a2e6fb410d9c33b",
+        "type": "subflow:51751d6da98303cc",
+        "z": "88a0490b5ee9139a",
+        "name": "living garden light",
+        "env": [
+            {
+                "name": "toTopic",
+                "value": "ampio/to/87D2/o/1/cmd",
+                "type": "str"
+            },
+            {
+                "name": "fromTopic",
+                "value": "ampio/from/87D2/state/o/1",
+                "type": "str"
+            }
+        ],
+        "x": 410,
+        "y": 280,
+        "wires": [
+            [
+                "57c9e45f612649bb"
+            ]
+        ]
+    },
+    {
+        "id": "5cbddeec3ebca9d3",
+        "type": "subflow:51751d6da98303cc",
+        "z": "88a0490b5ee9139a",
+        "name": "living entrance light",
+        "env": [
+            {
+                "name": "toTopic",
+                "value": "ampio/to/87D2/o/3/cmd",
+                "type": "str"
+            },
+            {
+                "name": "fromTopic",
+                "value": "ampio/from/87D2/state/o/3",
+                "type": "str"
+            }
+        ],
+        "x": 410,
+        "y": 200,
+        "wires": [
+            [
+                "10153266ff4c9688"
+            ]
+        ]
+    },
+    {
+        "id": "a7e2ddac2e702f46",
+        "type": "subflow:51751d6da98303cc",
+        "z": "88a0490b5ee9139a",
+        "name": "wardrobe light",
+        "env": [
+            {
+                "name": "toTopic",
+                "value": "ampio/to/87CC/o/3/cmd",
+                "type": "str"
+            },
+            {
+                "name": "fromTopic",
+                "value": "ampio/from/87CC/state/o/3",
+                "type": "str"
+            },
+            {
+                "name": "inputTopic",
+                "value": "${guest_ceiling_light_topic_to}",
+                "type": "str"
+            },
+            {
+                "name": "outputTopic",
+                "value": "{guest_ceiling_light_topic_from}",
+                "type": "str"
+            }
+        ],
+        "x": 1320,
+        "y": 420,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "0356126326dccf4b",
+        "type": "mqtt in",
+        "z": "88a0490b5ee9139a",
+        "name": "wardrobe sensor",
+        "topic": "ampio/from/7FA7/state/bi/10",
+        "qos": "2",
+        "datatype": "auto",
+        "broker": "190e1795.e65c88",
+        "nl": false,
+        "rap": false,
+        "inputs": 0,
+        "x": 940,
+        "y": 420,
+        "wires": [
+            [
+                "6f27a0431d6e8010"
+            ]
+        ]
+    },
+    {
+        "id": "6f27a0431d6e8010",
+        "type": "trigger",
+        "z": "88a0490b5ee9139a",
+        "name": "",
+        "op1": "",
+        "op2": "0",
+        "op1type": "nul",
+        "op2type": "str",
+        "duration": "30",
+        "extend": false,
+        "overrideDelay": false,
+        "units": "s",
+        "reset": "1",
+        "bytopic": "all",
+        "topic": "topic",
+        "outputs": 1,
+        "x": 1130,
+        "y": 420,
+        "wires": [
+            [
+                "a7e2ddac2e702f46"
+            ]
+        ]
+    },
+    {
+        "id": "9b3fc47ee593e465",
+        "type": "subflow:51751d6da98303cc",
+        "z": "88a0490b5ee9139a",
+        "name": "laundry light",
+        "env": [
+            {
+                "name": "toTopic",
+                "value": "ampio/to/87C5/o/7/cmd",
+                "type": "str"
+            },
+            {
+                "name": "fromTopic",
+                "value": "ampio/from/87C5/state/o/7",
+                "type": "str"
+            },
+            {
+                "name": "inputTopic",
+                "value": "${guest_ceiling_light_topic_to}",
+                "type": "str"
+            },
+            {
+                "name": "outputTopic",
+                "value": "{guest_ceiling_light_topic_from}",
+                "type": "str"
+            }
+        ],
+        "x": 1310,
+        "y": 480,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "2515c120f305c7c2",
+        "type": "mqtt in",
+        "z": "88a0490b5ee9139a",
+        "name": "laundry sensor",
+        "topic": "ampio/from/7FA7/state/bi/6",
+        "qos": "2",
+        "datatype": "auto",
+        "broker": "190e1795.e65c88",
+        "nl": false,
+        "rap": false,
+        "inputs": 0,
+        "x": 940,
+        "y": 480,
+        "wires": [
+            [
+                "3ae2df66aee1e9c3"
+            ]
+        ]
+    },
+    {
+        "id": "3ae2df66aee1e9c3",
+        "type": "trigger",
+        "z": "88a0490b5ee9139a",
+        "name": "",
+        "op1": "",
+        "op2": "0",
+        "op1type": "nul",
+        "op2type": "str",
+        "duration": "30",
+        "extend": false,
+        "overrideDelay": false,
+        "units": "s",
+        "reset": "1",
+        "bytopic": "all",
+        "topic": "topic",
+        "outputs": 1,
+        "x": 1130,
+        "y": 480,
+        "wires": [
+            [
+                "9b3fc47ee593e465"
+            ]
+        ]
+    },
+    {
+        "id": "671374e669f8b3cf",
+        "type": "inject",
+        "z": "88a0490b5ee9139a",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "0",
+        "payloadType": "num",
+        "x": 150,
+        "y": 1060,
+        "wires": [
+            [
+                "45c31151cfb3c12d"
+            ]
+        ]
+    },
+    {
+        "id": "be32f4f90617a82f",
+        "type": "inject",
+        "z": "88a0490b5ee9139a",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "1",
+        "payloadType": "num",
+        "x": 150,
+        "y": 1100,
+        "wires": [
+            [
+                "45c31151cfb3c12d"
+            ]
+        ]
+    },
+    {
+        "id": "45c31151cfb3c12d",
+        "type": "subflow:51751d6da98303cc",
+        "z": "88a0490b5ee9139a",
+        "name": "store light",
+        "env": [
+            {
+                "name": "toTopic",
+                "value": "ampio/to/87CC/o/4/cmd",
+                "type": "str"
+            },
+            {
+                "name": "fromTopic",
+                "value": "ampio/from/87CC/state/o/4",
+                "type": "str"
+            }
+        ],
+        "x": 380,
+        "y": 1080,
+        "wires": [
+            [
+                "ca835fd365c59323"
+            ]
+        ]
+    },
+    {
+        "id": "6a34e7f81e902417",
+        "type": "inject",
+        "z": "88a0490b5ee9139a",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "0",
+        "payloadType": "num",
+        "x": 150,
+        "y": 1140,
+        "wires": [
+            [
+                "5c11fcf11fb4f7c5"
+            ]
+        ]
+    },
+    {
+        "id": "13fabf8f8b617cfe",
+        "type": "inject",
+        "z": "88a0490b5ee9139a",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "1",
+        "payloadType": "num",
+        "x": 150,
+        "y": 1180,
+        "wires": [
+            [
+                "5c11fcf11fb4f7c5"
+            ]
+        ]
+    },
+    {
+        "id": "5c11fcf11fb4f7c5",
+        "type": "subflow:51751d6da98303cc",
+        "z": "88a0490b5ee9139a",
+        "name": "bathroom 0 ceiling light",
+        "env": [
+            {
+                "name": "toTopic",
+                "value": "ampio/to/87C7/o/7/cmd",
+                "type": "str"
+            },
+            {
+                "name": "fromTopic",
+                "value": "ampio/from/87C7/state/o/7",
+                "type": "str"
+            }
+        ],
+        "x": 430,
+        "y": 1160,
+        "wires": [
+            [
+                "5f93e01460be05c7"
+            ]
+        ]
+    },
+    {
+        "id": "ef6e8cdafd47a094",
+        "type": "inject",
+        "z": "88a0490b5ee9139a",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "0",
+        "payloadType": "num",
+        "x": 150,
+        "y": 1220,
+        "wires": [
+            [
+                "cdee2a6022e9f846"
+            ]
+        ]
+    },
+    {
+        "id": "2370bc149cf42a5a",
+        "type": "inject",
+        "z": "88a0490b5ee9139a",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "1",
+        "payloadType": "num",
+        "x": 150,
+        "y": 1260,
+        "wires": [
+            [
+                "cdee2a6022e9f846"
+            ]
+        ]
+    },
+    {
+        "id": "cdee2a6022e9f846",
+        "type": "subflow:51751d6da98303cc",
+        "z": "88a0490b5ee9139a",
+        "name": "bathroom 0 mirror light",
+        "env": [
+            {
+                "name": "toTopic",
+                "value": "ampio/to/87C7/o/8/cmd",
+                "type": "str"
+            },
+            {
+                "name": "fromTopic",
+                "value": "ampio/from/87C7/state/o/8",
+                "type": "str"
+            }
+        ],
+        "x": 420,
+        "y": 1240,
+        "wires": [
+            [
+                "df61ee98043bf261"
+            ]
+        ]
+    },
+    {
+        "id": "450f947303263acb",
+        "type": "mqtt in",
+        "z": "88a0490b5ee9139a",
+        "name": "bathroom 0 sensor",
+        "topic": "ampio/from/7FA7/state/bi/16",
+        "qos": "2",
+        "datatype": "auto",
+        "broker": "190e1795.e65c88",
+        "nl": false,
+        "rap": false,
+        "inputs": 0,
+        "x": 950,
+        "y": 560,
+        "wires": [
+            [
+                "73c385664d121cec"
+            ]
+        ]
+    },
+    {
+        "id": "73c385664d121cec",
+        "type": "trigger",
+        "z": "88a0490b5ee9139a",
+        "name": "",
+        "op1": "",
+        "op2": "0",
+        "op1type": "nul",
+        "op2type": "str",
+        "duration": "15",
+        "extend": false,
+        "overrideDelay": false,
+        "units": "min",
+        "reset": "1",
+        "bytopic": "all",
+        "topic": "topic",
+        "outputs": 1,
+        "x": 1130,
+        "y": 560,
+        "wires": [
+            [
+                "ad492ab519a5f005",
+                "cba6f9492a77afcf"
+            ]
+        ]
+    },
+    {
+        "id": "cf0b9c7173388dd6",
+        "type": "sunpos",
+        "z": "88a0490b5ee9139a",
+        "name": "sun position",
+        "lon": "19.493367",
+        "lat": "51.666359",
+        "start": "sunrise",
+        "startoffset": "",
+        "end": "goldenHour",
+        "endoffset": "",
+        "x": 1130,
+        "y": 760,
+        "wires": [
+            [
+                "76b66b7697c01f78"
+            ]
+        ]
+    },
+    {
+        "id": "dbc4eabb21a4539c",
+        "type": "inject",
+        "z": "88a0490b5ee9139a",
+        "name": "10 min interval",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "600",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payloadType": "date",
+        "x": 960,
+        "y": 760,
+        "wires": [
+            [
+                "cf0b9c7173388dd6"
+            ]
+        ]
+    },
+    {
+        "id": "76b66b7697c01f78",
+        "type": "function",
+        "z": "88a0490b5ee9139a",
+        "name": "isNightLightOn",
+        "func": "if(\n    msg == null || \n    msg.payload == null || \n    msg.payload.sunInSky == null\n)\nreturn 0;\n\nvar isNight = !msg.payload.sunInSky;\nvar currentHour = new Date().getHours();\nvar isBedTime = currentHour < 7 ? true : false;\nvar lightStatus = (isNight && !isBedTime) ? 1 : 0;\n\nreturn {\n    payload: lightStatus\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1300,
+        "y": 760,
+        "wires": [
+            [
+                "329a6a220a0177d2"
+            ]
+        ]
+    },
+    {
+        "id": "8f1f9341c4e9027f",
+        "type": "inject",
+        "z": "88a0490b5ee9139a",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "0",
+        "payloadType": "num",
+        "x": 150,
+        "y": 1300,
+        "wires": [
+            [
+                "c7ac33e2ee6a8e7f"
+            ]
+        ]
+    },
+    {
+        "id": "34c8a8c35e39d561",
+        "type": "inject",
+        "z": "88a0490b5ee9139a",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "1",
+        "payloadType": "num",
+        "x": 150,
+        "y": 1340,
+        "wires": [
+            [
+                "c7ac33e2ee6a8e7f"
+            ]
+        ]
+    },
+    {
+        "id": "c7ac33e2ee6a8e7f",
+        "type": "subflow:51751d6da98303cc",
+        "z": "88a0490b5ee9139a",
+        "name": "external front light",
+        "env": [
+            {
+                "name": "toTopic",
+                "value": "ampio/to/87D2/o/7/cmd",
+                "type": "str"
+            },
+            {
+                "name": "fromTopic",
+                "value": "ampio/from/87D2/state/o/7",
+                "type": "str"
+            }
+        ],
+        "x": 410,
+        "y": 1320,
+        "wires": [
+            [
+                "b11c126115bfc80d"
+            ]
+        ]
+    },
+    {
+        "id": "22dac014f29868e1",
+        "type": "inject",
+        "z": "88a0490b5ee9139a",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "0",
+        "payloadType": "num",
+        "x": 150,
+        "y": 1380,
+        "wires": [
+            [
+                "a914fd37ebae7959"
+            ]
+        ]
+    },
+    {
+        "id": "3d5f26d4739f1b70",
+        "type": "inject",
+        "z": "88a0490b5ee9139a",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "1",
+        "payloadType": "num",
+        "x": 150,
+        "y": 1420,
+        "wires": [
+            [
+                "a914fd37ebae7959"
+            ]
+        ]
+    },
+    {
+        "id": "a914fd37ebae7959",
+        "type": "subflow:51751d6da98303cc",
+        "z": "88a0490b5ee9139a",
+        "name": "entrance light",
+        "env": [
+            {
+                "name": "toTopic",
+                "value": "ampio/to/87C7/o/1/cmd",
+                "type": "str"
+            },
+            {
+                "name": "fromTopic",
+                "value": "ampio/from/87C7/state/o/1",
+                "type": "str"
+            }
+        ],
+        "x": 400,
+        "y": 1400,
+        "wires": [
+            [
+                "a9139d647ec91988"
+            ]
+        ]
+    },
+    {
+        "id": "b4c7be8deb916883",
+        "type": "mqtt in",
+        "z": "88a0490b5ee9139a",
+        "name": " entrance sensor",
+        "topic": "ampio/from/7FA7/state/bi/1",
+        "qos": "2",
+        "datatype": "auto",
+        "broker": "190e1795.e65c88",
+        "nl": false,
+        "rap": false,
+        "inputs": 0,
+        "x": 940,
+        "y": 660,
+        "wires": [
+            [
+                "1aeb2619fd3bb6cd"
+            ]
+        ]
+    },
+    {
+        "id": "1aeb2619fd3bb6cd",
+        "type": "trigger",
+        "z": "88a0490b5ee9139a",
+        "name": "",
+        "op1": "",
+        "op2": "0",
+        "op1type": "nul",
+        "op2type": "str",
+        "duration": "15",
+        "extend": false,
+        "overrideDelay": false,
+        "units": "min",
+        "reset": "1",
+        "bytopic": "all",
+        "topic": "topic",
+        "outputs": 1,
+        "x": 1130,
+        "y": 660,
+        "wires": [
+            [
+                "d7e4e27eecae948b"
+            ]
+        ]
+    },
+    {
+        "id": "10153266ff4c9688",
+        "type": "subflow:610816c128f243ad",
+        "z": "88a0490b5ee9139a",
+        "name": "",
+        "env": [
+            {
+                "name": "name",
+                "value": "entrance light",
+                "type": "str"
+            }
+        ],
+        "x": 630,
+        "y": 200,
+        "wires": [
+            [
+                "5cbddeec3ebca9d3"
+            ]
+        ]
+    },
+    {
+        "id": "57c9e45f612649bb",
+        "type": "subflow:610816c128f243ad",
+        "z": "88a0490b5ee9139a",
+        "name": "",
+        "env": [
+            {
+                "name": "name",
+                "value": "garden light",
+                "type": "str"
+            }
+        ],
+        "x": 630,
+        "y": 280,
+        "wires": [
+            [
+                "1a2e6fb410d9c33b"
+            ]
+        ]
+    },
+    {
+        "id": "24613e36664826d9",
+        "type": "subflow:610816c128f243ad",
+        "z": "88a0490b5ee9139a",
+        "name": "",
+        "env": [
+            {
+                "name": "name",
+                "value": "dining light",
+                "type": "str"
+            }
+        ],
+        "x": 630,
+        "y": 360,
+        "wires": [
+            [
+                "27957a451118d5a1"
+            ]
+        ]
+    },
+    {
+        "id": "47f2dbe2efce9935",
+        "type": "subflow:610816c128f243ad",
+        "z": "88a0490b5ee9139a",
+        "name": "",
+        "env": [
+            {
+                "name": "name",
+                "value": "main light",
+                "type": "str"
+            }
+        ],
+        "x": 630,
+        "y": 680,
+        "wires": [
+            [
+                "5ad37faa489a2055"
+            ]
+        ]
+    },
+    {
+        "id": "fa13b0acc81074f2",
+        "type": "subflow:610816c128f243ad",
+        "z": "88a0490b5ee9139a",
+        "name": "",
+        "env": [
+            {
+                "name": "name",
+                "value": "wall light",
+                "type": "str"
+            }
+        ],
+        "x": 630,
+        "y": 760,
+        "wires": [
+            [
+                "170032a92c297c86"
+            ]
+        ]
+    },
+    {
+        "id": "916cbca802f99689",
+        "type": "subflow:610816c128f243ad",
+        "z": "88a0490b5ee9139a",
+        "name": "",
+        "env": [
+            {
+                "name": "name",
+                "value": "main light",
+                "type": "str"
+            }
+        ],
+        "x": 630,
+        "y": 840,
+        "wires": [
+            [
+                "44cfcc2ed0e90e51"
+            ]
+        ]
+    },
+    {
+        "id": "ed66579615c3fd56",
+        "type": "subflow:610816c128f243ad",
+        "z": "88a0490b5ee9139a",
+        "name": "",
+        "env": [
+            {
+                "name": "name",
+                "value": "wall light",
+                "type": "str"
+            }
+        ],
+        "x": 630,
+        "y": 920,
+        "wires": [
+            [
+                "bb9e60177519183b"
+            ]
+        ]
+    },
+    {
+        "id": "e4b53a2e7de9e1f0",
+        "type": "subflow:610816c128f243ad",
+        "z": "88a0490b5ee9139a",
+        "name": "",
+        "env": [
+            {
+                "name": "name",
+                "value": "main light",
+                "type": "str"
+            }
+        ],
+        "x": 630,
+        "y": 1000,
+        "wires": [
+            [
+                "2fddb551df0cba1a"
+            ]
+        ]
+    },
+    {
+        "id": "ca835fd365c59323",
+        "type": "subflow:610816c128f243ad",
+        "z": "88a0490b5ee9139a",
+        "name": "",
+        "env": [
+            {
+                "name": "name",
+                "value": "main light",
+                "type": "str"
+            }
+        ],
+        "x": 630,
+        "y": 1080,
+        "wires": [
+            [
+                "45c31151cfb3c12d"
+            ]
+        ]
+    },
+    {
+        "id": "5f93e01460be05c7",
+        "type": "subflow:610816c128f243ad",
+        "z": "88a0490b5ee9139a",
+        "name": "",
+        "env": [
+            {
+                "name": "name",
+                "value": "main light",
+                "type": "str"
+            }
+        ],
+        "x": 630,
+        "y": 1160,
+        "wires": [
+            [
+                "5c11fcf11fb4f7c5"
+            ]
+        ]
+    },
+    {
+        "id": "df61ee98043bf261",
+        "type": "subflow:610816c128f243ad",
+        "z": "88a0490b5ee9139a",
+        "name": "",
+        "env": [
+            {
+                "name": "name",
+                "value": "mirror light",
+                "type": "str"
+            }
+        ],
+        "x": 630,
+        "y": 1240,
+        "wires": [
+            [
+                "cdee2a6022e9f846"
+            ]
+        ]
+    },
+    {
+        "id": "b11c126115bfc80d",
+        "type": "subflow:610816c128f243ad",
+        "z": "88a0490b5ee9139a",
+        "name": "",
+        "env": [
+            {
+                "name": "name",
+                "value": "front light",
+                "type": "str"
+            }
+        ],
+        "x": 630,
+        "y": 1320,
+        "wires": [
+            [
+                "c7ac33e2ee6a8e7f"
+            ]
+        ]
+    },
+    {
+        "id": "a9139d647ec91988",
+        "type": "subflow:610816c128f243ad",
+        "z": "88a0490b5ee9139a",
+        "name": "",
+        "env": [
+            {
+                "name": "name",
+                "value": "main light",
+                "type": "str"
+            }
+        ],
+        "x": 630,
+        "y": 1400,
+        "wires": [
+            [
+                "a914fd37ebae7959"
+            ]
+        ]
+    },
+    {
+        "id": "ce0cd4340f07d2ab",
+        "type": "subflow:51751d6da98303cc",
+        "z": "88a0490b5ee9139a",
+        "name": "guest light",
+        "env": [
+            {
+                "name": "toTopic",
+                "value": "ampio/to/87C7/o/6/cmd",
+                "type": "str"
+            },
+            {
+                "name": "fromTopic",
+                "value": "ampio/from/87C7/state/o/6",
+                "type": "str"
+            },
+            {
+                "name": "inputTopic",
+                "value": "${guest_ceiling_light_topic_to}",
+                "type": "str"
+            },
+            {
+                "name": "outputTopic",
+                "value": "{guest_ceiling_light_topic_from}",
+                "type": "str"
+            }
+        ],
+        "x": 1310,
+        "y": 120,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "2f4205ade48466dc",
+        "type": "subflow:51751d6da98303cc",
+        "z": "88a0490b5ee9139a",
+        "name": "blanka wall light",
+        "env": [
+            {
+                "name": "toTopic",
+                "value": "ampio/to/87C5/o/2/cmd",
+                "type": "str"
+            },
+            {
+                "name": "fromTopic",
+                "value": "ampio/from/87C5/state/o/2",
+                "type": "str"
+            }
+        ],
+        "x": 1320,
+        "y": 180,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "ae8507ea0ae92f4f",
+        "type": "subflow:51751d6da98303cc",
+        "z": "88a0490b5ee9139a",
+        "name": "blanka ceiling light",
+        "env": [
+            {
+                "name": "toTopic",
+                "value": "ampio/to/87C5/o/1/cmd",
+                "type": "str"
+            },
+            {
+                "name": "fromTopic",
+                "value": "ampio/from/87C5/state/o/1",
+                "type": "str"
+            }
+        ],
+        "x": 1330,
+        "y": 240,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "87aa4a92d4e5b873",
+        "type": "subflow:51751d6da98303cc",
+        "z": "88a0490b5ee9139a",
+        "name": "leon wall light",
+        "env": [
+            {
+                "name": "toTopic",
+                "value": "ampio/to/87C5/o/4/cmd",
+                "type": "str"
+            },
+            {
+                "name": "fromTopic",
+                "value": "ampio/from/87C5/state/o/4",
+                "type": "str"
+            }
+        ],
+        "x": 1320,
+        "y": 300,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "10cb0fcaff5a1a62",
+        "type": "subflow:51751d6da98303cc",
+        "z": "88a0490b5ee9139a",
+        "name": "leon ceiling light",
+        "env": [
+            {
+                "name": "toTopic",
+                "value": "ampio/to/87C5/o/3/cmd",
+                "type": "str"
+            },
+            {
+                "name": "fromTopic",
+                "value": "ampio/from/87C5/state/o/3",
+                "type": "str"
+            }
+        ],
+        "x": 1320,
+        "y": 360,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "ad492ab519a5f005",
+        "type": "subflow:51751d6da98303cc",
+        "z": "88a0490b5ee9139a",
+        "name": "bathroom 0 ceiling light",
+        "env": [
+            {
+                "name": "toTopic",
+                "value": "ampio/to/87C7/o/7/cmd",
+                "type": "str"
+            },
+            {
+                "name": "fromTopic",
+                "value": "ampio/from/87C7/state/o/7",
+                "type": "str"
+            }
+        ],
+        "x": 1350,
+        "y": 540,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "cba6f9492a77afcf",
+        "type": "subflow:51751d6da98303cc",
+        "z": "88a0490b5ee9139a",
+        "name": "bathroom 0 mirror light",
+        "env": [
+            {
+                "name": "toTopic",
+                "value": "ampio/to/87C7/o/8/cmd",
+                "type": "str"
+            },
+            {
+                "name": "fromTopic",
+                "value": "ampio/from/87C7/state/o/8",
+                "type": "str"
+            }
+        ],
+        "x": 1340,
+        "y": 600,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "329a6a220a0177d2",
+        "type": "subflow:51751d6da98303cc",
+        "z": "88a0490b5ee9139a",
+        "name": "external front light",
+        "env": [
+            {
+                "name": "toTopic",
+                "value": "ampio/to/87D2/o/7/cmd",
+                "type": "str"
+            },
+            {
+                "name": "fromTopic",
+                "value": "ampio/from/87D2/state/o/7",
+                "type": "str"
+            }
+        ],
+        "x": 1490,
+        "y": 760,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "d7e4e27eecae948b",
+        "type": "subflow:51751d6da98303cc",
+        "z": "88a0490b5ee9139a",
+        "name": "entrance light",
+        "env": [
+            {
+                "name": "toTopic",
+                "value": "ampio/to/87C7/o/1/cmd",
+                "type": "str"
+            },
+            {
+                "name": "fromTopic",
+                "value": "ampio/from/87C7/state/o/1",
+                "type": "str"
+            }
+        ],
+        "x": 1320,
+        "y": 660,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "c5c8c056f9b56cd5",
+        "type": "subflow:51751d6da98303cc",
+        "z": "88a0490b5ee9139a",
+        "name": "laundry light",
+        "env": [
+            {
+                "name": "toTopic",
+                "value": "ampio/to/87C5/o/7/cmd",
+                "type": "str"
+            },
+            {
+                "name": "fromTopic",
+                "value": "ampio/from/87C5/state/o/7",
+                "type": "str"
+            },
+            {
+                "name": "inputTopic",
+                "value": "${guest_ceiling_light_topic_to}",
+                "type": "str"
+            },
+            {
+                "name": "outputTopic",
+                "value": "{guest_ceiling_light_topic_from}",
+                "type": "str"
+            }
+        ],
+        "x": 390,
+        "y": 1480,
+        "wires": [
+            [
+                "c0639cee5e15b0dc"
+            ]
+        ]
+    },
+    {
+        "id": "e1ce0d6dd1c7b4a7",
+        "type": "subflow:51751d6da98303cc",
+        "z": "88a0490b5ee9139a",
+        "name": "wardrobe light",
+        "env": [
+            {
+                "name": "toTopic",
+                "value": "ampio/to/87CC/o/3/cmd",
+                "type": "str"
+            },
+            {
+                "name": "fromTopic",
+                "value": "ampio/from/87CC/state/o/3",
+                "type": "str"
+            },
+            {
+                "name": "inputTopic",
+                "value": "${guest_ceiling_light_topic_to}",
+                "type": "str"
+            },
+            {
+                "name": "outputTopic",
+                "value": "{guest_ceiling_light_topic_from}",
+                "type": "str"
+            }
+        ],
+        "x": 400,
+        "y": 1560,
+        "wires": [
+            [
+                "a465b6ca426120dd"
+            ]
+        ]
+    },
+    {
+        "id": "ab301f2687f1c59a",
+        "type": "inject",
+        "z": "88a0490b5ee9139a",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "0",
+        "payloadType": "num",
+        "x": 150,
+        "y": 1460,
+        "wires": [
+            [
+                "c5c8c056f9b56cd5"
+            ]
+        ]
+    },
+    {
+        "id": "efce497d3f35629a",
+        "type": "inject",
+        "z": "88a0490b5ee9139a",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "1",
+        "payloadType": "num",
+        "x": 150,
+        "y": 1500,
+        "wires": [
+            [
+                "c5c8c056f9b56cd5"
+            ]
+        ]
+    },
+    {
+        "id": "3ef55732a199f083",
+        "type": "inject",
+        "z": "88a0490b5ee9139a",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "0",
+        "payloadType": "num",
+        "x": 150,
+        "y": 1540,
+        "wires": [
+            [
+                "e1ce0d6dd1c7b4a7"
+            ]
+        ]
+    },
+    {
+        "id": "34d977310cfd8aab",
+        "type": "inject",
+        "z": "88a0490b5ee9139a",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "1",
+        "payloadType": "num",
+        "x": 150,
+        "y": 1580,
+        "wires": [
+            [
+                "e1ce0d6dd1c7b4a7"
+            ]
+        ]
+    },
+    {
+        "id": "3c91b6ce90d96811",
+        "type": "subflow:e506f30f36e9e788",
+        "z": "88a0490b5ee9139a",
+        "name": "living main dimmer",
+        "env": [
+            {
+                "name": "toTopic",
+                "value": "ampio/to/51CC/o/1/cmd",
+                "type": "str"
+            },
+            {
+                "name": "isOnTopic",
+                "value": "ampio/from/51CC/state/o/1",
+                "type": "str"
+            },
+            {
+                "name": "brightnessTopic",
+                "value": "ampio/from/51CC/state/a/1",
+                "type": "str"
+            }
+        ],
+        "x": 410,
+        "y": 100,
+        "wires": [
+            [],
+            [
+                "23c700e58a24feca"
+            ]
+        ]
+    },
+    {
+        "id": "e880bbcb87e05e55",
+        "type": "inject",
+        "z": "88a0490b5ee9139a",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "100",
+        "payloadType": "num",
+        "x": 150,
+        "y": 100,
+        "wires": [
+            [
+                "3c91b6ce90d96811"
+            ]
+        ]
+    },
+    {
+        "id": "23c700e58a24feca",
+        "type": "subflow:dc62f7ecac1d9b16",
+        "z": "88a0490b5ee9139a",
+        "name": "",
+        "env": [
+            {
+                "name": "name",
+                "value": "main light",
+                "type": "str"
+            }
+        ],
+        "x": 650,
+        "y": 100,
+        "wires": [
+            [
+                "3c91b6ce90d96811"
+            ]
+        ]
+    },
+    {
+        "id": "c0639cee5e15b0dc",
+        "type": "subflow:610816c128f243ad",
+        "z": "88a0490b5ee9139a",
+        "name": "",
+        "env": [
+            {
+                "name": "name",
+                "value": "laundry light",
+                "type": "str"
+            }
+        ],
+        "x": 630,
+        "y": 1480,
+        "wires": [
+            [
+                "c5c8c056f9b56cd5"
+            ]
+        ]
+    },
+    {
+        "id": "a465b6ca426120dd",
+        "type": "subflow:610816c128f243ad",
+        "z": "88a0490b5ee9139a",
+        "name": "",
+        "env": [
+            {
+                "name": "name",
+                "value": "wardrobe light",
+                "type": "str"
+            }
+        ],
+        "x": 630,
+        "y": 1560,
+        "wires": [
+            [
+                "e1ce0d6dd1c7b4a7"
+            ]
+        ]
+    },
+    {
+        "id": "67eafec6ddea9781",
+        "type": "inject",
+        "z": "88a0490b5ee9139a",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "1",
+        "payloadType": "num",
+        "x": 150,
+        "y": 460,
+        "wires": [
+            [
+                "6cfcf1525d3ff0e1"
+            ]
+        ]
+    },
+    {
+        "id": "2f9f7020f7efa134",
+        "type": "inject",
+        "z": "88a0490b5ee9139a",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "0",
+        "payloadType": "num",
+        "x": 150,
+        "y": 420,
+        "wires": [
+            [
+                "6cfcf1525d3ff0e1"
+            ]
+        ]
+    },
+    {
+        "id": "6cfcf1525d3ff0e1",
+        "type": "subflow:51751d6da98303cc",
+        "z": "88a0490b5ee9139a",
+        "name": "kitchen light",
+        "env": [
+            {
+                "name": "toTopic",
+                "value": "ampio/to/87D2/o/4/cmd",
+                "type": "str"
+            },
+            {
+                "name": "fromTopic",
+                "value": "ampio/from/87D2/state/o/4",
+                "type": "str"
+            }
+        ],
+        "x": 390,
+        "y": 440,
+        "wires": [
+            [
+                "72b0f22c70198404"
+            ]
+        ]
+    },
+    {
+        "id": "72b0f22c70198404",
+        "type": "subflow:610816c128f243ad",
+        "z": "88a0490b5ee9139a",
+        "name": "",
+        "env": [
+            {
+                "name": "name",
+                "value": "kitchen light",
+                "type": "str"
+            }
+        ],
+        "x": 630,
+        "y": 440,
+        "wires": [
+            [
+                "6cfcf1525d3ff0e1"
+            ]
+        ]
+    },
+    {
+        "id": "064598d0cf0a9aed",
+        "type": "inject",
+        "z": "88a0490b5ee9139a",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "1",
+        "payloadType": "num",
+        "x": 150,
+        "y": 540,
+        "wires": [
+            [
+                "916d4a1cadad0295"
+            ]
+        ]
+    },
+    {
+        "id": "a476af3a27471871",
+        "type": "inject",
+        "z": "88a0490b5ee9139a",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "0",
+        "payloadType": "num",
+        "x": 150,
+        "y": 500,
+        "wires": [
+            [
+                "916d4a1cadad0295"
+            ]
+        ]
+    },
+    {
+        "id": "916d4a1cadad0295",
+        "type": "subflow:51751d6da98303cc",
+        "z": "88a0490b5ee9139a",
+        "name": "hall 0 light",
+        "env": [
+            {
+                "name": "toTopic",
+                "value": "ampio/to/87c7/o/5/cmd",
+                "type": "str"
+            },
+            {
+                "name": "fromTopic",
+                "value": "ampio/from/87c7/state/o/5",
+                "type": "str"
+            }
+        ],
+        "x": 390,
+        "y": 520,
+        "wires": [
+            [
+                "7738f9eaa69db482"
+            ]
+        ]
+    },
+    {
+        "id": "7738f9eaa69db482",
+        "type": "subflow:610816c128f243ad",
+        "z": "88a0490b5ee9139a",
+        "name": "",
+        "env": [
+            {
+                "name": "name",
+                "value": "hall 0 light",
+                "type": "str"
+            }
+        ],
+        "x": 630,
+        "y": 520,
+        "wires": [
+            [
+                "916d4a1cadad0295"
+            ]
+        ]
+    },
+    {
+        "id": "914f34970cdb5275",
+        "type": "inject",
+        "z": "88a0490b5ee9139a",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "1",
+        "payloadType": "num",
+        "x": 150,
+        "y": 620,
+        "wires": [
+            [
+                "1acf87a6422f626a"
+            ]
+        ]
+    },
+    {
+        "id": "99763576a3a35b23",
+        "type": "inject",
+        "z": "88a0490b5ee9139a",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "0",
+        "payloadType": "num",
+        "x": 150,
+        "y": 580,
+        "wires": [
+            [
+                "1acf87a6422f626a"
+            ]
+        ]
+    },
+    {
+        "id": "1acf87a6422f626a",
+        "type": "subflow:51751d6da98303cc",
+        "z": "88a0490b5ee9139a",
+        "name": "hall 1 light",
+        "env": [
+            {
+                "name": "toTopic",
+                "value": "ampio/to/87cc/o/5/cmd",
+                "type": "str"
+            },
+            {
+                "name": "fromTopic",
+                "value": "ampio/from/87cc/state/o/5",
+                "type": "str"
+            }
+        ],
+        "x": 390,
+        "y": 600,
+        "wires": [
+            [
+                "c5d144fa4da7786d"
+            ]
+        ]
+    },
+    {
+        "id": "c5d144fa4da7786d",
+        "type": "subflow:610816c128f243ad",
+        "z": "88a0490b5ee9139a",
+        "name": "",
+        "env": [
+            {
+                "name": "name",
+                "value": "hall 1 light",
+                "type": "str"
+            }
+        ],
+        "x": 630,
+        "y": 600,
+        "wires": [
+            [
+                "1acf87a6422f626a"
+            ]
+        ]
+    },
+    {
+        "id": "c48244590a76ce6b",
+        "type": "inject",
+        "z": "88a0490b5ee9139a",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "0",
+        "payloadType": "num",
+        "x": 150,
+        "y": 1620,
+        "wires": [
+            [
+                "2114eccdf64bc2b5"
+            ]
+        ]
+    },
+    {
+        "id": "f93660b038439849",
+        "type": "inject",
+        "z": "88a0490b5ee9139a",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "1",
+        "payloadType": "num",
+        "x": 150,
+        "y": 1660,
+        "wires": [
+            [
+                "2114eccdf64bc2b5"
+            ]
+        ]
+    },
+    {
+        "id": "2114eccdf64bc2b5",
+        "type": "subflow:51751d6da98303cc",
+        "z": "88a0490b5ee9139a",
+        "name": "bathroom 1 ceiling light",
+        "env": [
+            {
+                "name": "toTopic",
+                "value": "ampio/to/87C5/o/5/cmd",
+                "type": "str"
+            },
+            {
+                "name": "fromTopic",
+                "value": "ampio/from/87C5/state/o/5",
+                "type": "str"
+            }
+        ],
+        "x": 430,
+        "y": 1640,
+        "wires": [
+            [
+                "197b4a06a3535167"
+            ]
+        ]
+    },
+    {
+        "id": "3a20e45d52e0485c",
+        "type": "inject",
+        "z": "88a0490b5ee9139a",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "0",
+        "payloadType": "num",
+        "x": 150,
+        "y": 1700,
+        "wires": [
+            [
+                "e8a4974bac5b5977"
+            ]
+        ]
+    },
+    {
+        "id": "1e2e70ce089e761a",
+        "type": "inject",
+        "z": "88a0490b5ee9139a",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "1",
+        "payloadType": "num",
+        "x": 150,
+        "y": 1740,
+        "wires": [
+            [
+                "e8a4974bac5b5977"
+            ]
+        ]
+    },
+    {
+        "id": "e8a4974bac5b5977",
+        "type": "subflow:51751d6da98303cc",
+        "z": "88a0490b5ee9139a",
+        "name": "bathroom 1 mirror light",
+        "env": [
+            {
+                "name": "toTopic",
+                "value": "ampio/to/87C5/o/6/cmd",
+                "type": "str"
+            },
+            {
+                "name": "fromTopic",
+                "value": "ampio/from/87C5/state/o/6",
+                "type": "str"
+            }
+        ],
+        "x": 420,
+        "y": 1720,
+        "wires": [
+            [
+                "74086168918fa0d4"
+            ]
+        ]
+    },
+    {
+        "id": "197b4a06a3535167",
+        "type": "subflow:610816c128f243ad",
+        "z": "88a0490b5ee9139a",
+        "name": "",
+        "env": [
+            {
+                "name": "name",
+                "value": "bathroom 1 main light",
+                "type": "str"
+            }
+        ],
+        "x": 630,
+        "y": 1640,
+        "wires": [
+            [
+                "2114eccdf64bc2b5"
+            ]
+        ]
+    },
+    {
+        "id": "74086168918fa0d4",
+        "type": "subflow:610816c128f243ad",
+        "z": "88a0490b5ee9139a",
+        "name": "",
+        "env": [
+            {
+                "name": "name",
+                "value": "bathroom 1 mirror light",
+                "type": "str"
+            }
+        ],
+        "x": 630,
+        "y": 1720,
+        "wires": [
+            [
+                "e8a4974bac5b5977"
+            ]
+        ]
+    },
+    {
+        "id": "bd01ff6058fd2f33",
+        "type": "inject",
+        "z": "88a0490b5ee9139a",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "0",
+        "payloadType": "num",
+        "x": 150,
+        "y": 1780,
+        "wires": [
+            [
+                "83602fdadead6ef1",
+                "d591d0912e6d3450"
+            ]
+        ]
+    },
+    {
+        "id": "62088ea241c4635c",
+        "type": "inject",
+        "z": "88a0490b5ee9139a",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "1",
+        "payloadType": "num",
+        "x": 150,
+        "y": 1820,
+        "wires": [
+            [
+                "83602fdadead6ef1",
+                "d591d0912e6d3450"
+            ]
+        ]
+    },
+    {
+        "id": "83602fdadead6ef1",
+        "type": "subflow:51751d6da98303cc",
+        "z": "88a0490b5ee9139a",
+        "name": "garage light",
+        "env": [
+            {
+                "name": "toTopic",
+                "value": "ampio/to/87CC/o/7/cmd",
+                "type": "str"
+            },
+            {
+                "name": "fromTopic",
+                "value": "ampio/from/87CC/state/o/7",
+                "type": "str"
+            }
+        ],
+        "x": 390,
+        "y": 1780,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "d591d0912e6d3450",
+        "type": "subflow:51751d6da98303cc",
+        "z": "88a0490b5ee9139a",
+        "name": "garage light",
+        "env": [
+            {
+                "name": "toTopic",
+                "value": "ampio/to/87CC/o/8/cmd",
+                "type": "str"
+            },
+            {
+                "name": "fromTopic",
+                "value": "ampio/from/87CC/state/o/8",
+                "type": "str"
+            }
+        ],
+        "x": 390,
+        "y": 1820,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "ead6c03e.d080f",
+        "type": "subflow:13cbf77f.87a069",
+        "z": "6bebbd23.6d57e4",
+        "name": "Supply temp (C) get",
+        "env": [
+            {
+                "name": "fieldName",
+                "value": "ai0",
+                "type": "str"
+            },
+            {
+                "name": "measurementName",
+                "value": "recu/supply-temp",
+                "type": "str"
+            },
+            {
+                "name": "interval",
+                "value": "10",
+                "type": "str"
+            }
+        ],
+        "x": 230,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "b7540758.481328",
+        "type": "subflow:13cbf77f.87a069",
+        "z": "6bebbd23.6d57e4",
+        "name": "Extract temp (C) get",
+        "env": [
+            {
+                "name": "fieldName",
+                "value": "ai1",
+                "type": "str"
+            },
+            {
+                "name": "measurementName",
+                "value": "recu/extract-temp",
+                "type": "str"
+            },
+            {
+                "name": "interval",
+                "value": "10",
+                "type": "str"
+            }
+        ],
+        "x": 230,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "1d8d6630.2c8dfa",
+        "type": "subflow:13cbf77f.87a069",
+        "z": "6bebbd23.6d57e4",
+        "name": "Outdoor temp (C) get",
+        "env": [
+            {
+                "name": "fieldName",
+                "value": "ai2",
+                "type": "str"
+            },
+            {
+                "name": "measurementName",
+                "value": "recu/outdoor-temp",
+                "type": "str"
+            },
+            {
+                "name": "interval",
+                "value": "10",
+                "type": "str"
+            }
+        ],
+        "x": 240,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "1bcc5ef2.0304f1",
+        "type": "subflow:13cbf77f.87a069",
+        "z": "6bebbd23.6d57e4",
+        "name": "Heat recovery (W) get",
+        "env": [
+            {
+                "name": "fieldName",
+                "value": "ec2",
+                "type": "str"
+            },
+            {
+                "name": "measurementName",
+                "value": "recu/heat-recovery",
+                "type": "str"
+            },
+            {
+                "name": "interval",
+                "value": "10",
+                "type": "str"
+            }
+        ],
+        "x": 240,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "5ff16d5d.30e5e4",
+        "type": "subflow:13cbf77f.87a069",
+        "z": "6bebbd23.6d57e4",
+        "name": "Heating power (W) get",
+        "env": [
+            {
+                "name": "fieldName",
+                "value": "ec4",
+                "type": "str"
+            },
+            {
+                "name": "measurementName",
+                "value": "recu/heat-power",
+                "type": "str"
+            },
+            {
+                "name": "interval",
+                "value": "10",
+                "type": "str"
+            }
+        ],
+        "x": 240,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "97e1fd63.ba281",
+        "type": "subflow:13cbf77f.87a069",
+        "z": "6bebbd23.6d57e4",
+        "name": "Heat exchanger efficiency (%) get",
+        "env": [
+            {
+                "name": "fieldName",
+                "value": "ec1",
+                "type": "str"
+            },
+            {
+                "name": "measurementName",
+                "value": "recu/heat-exchanger-efficiency",
+                "type": "str"
+            },
+            {
+                "name": "interval",
+                "value": "10",
+                "type": "str"
+            }
+        ],
+        "x": 260,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "1d632015.a6eac",
+        "type": "subflow:13cbf77f.87a069",
+        "z": "6bebbd23.6d57e4",
+        "name": "Filter clogging (%) get",
+        "env": [
+            {
+                "name": "fieldName",
+                "value": "fcg",
+                "type": "str"
+            },
+            {
+                "name": "measurementName",
+                "value": "recu/filter-clogging",
+                "type": "str"
+            },
+            {
+                "name": "interval",
+                "value": "10",
+                "type": "str"
+            }
+        ],
+        "x": 240,
+        "y": 440,
+        "wires": []
+    },
+    {
+        "id": "3d6fa92d.4b56b6",
+        "type": "subflow:13cbf77f.87a069",
+        "z": "6bebbd23.6d57e4",
+        "name": "Power consumption (W) get",
+        "env": [
+            {
+                "name": "fieldName",
+                "value": "ec3",
+                "type": "str"
+            },
+            {
+                "name": "measurementName",
+                "value": "recu/power-consumption",
+                "type": "str"
+            },
+            {
+                "name": "interval",
+                "value": "10",
+                "type": "str"
+            }
+        ],
+        "x": 600,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "35096cd2.d9dd34",
+        "type": "subflow:13cbf77f.87a069",
+        "z": "6bebbd23.6d57e4",
+        "name": "Air dampers (%) get",
+        "env": [
+            {
+                "name": "fieldName",
+                "value": "v_ad",
+                "type": "str"
+            },
+            {
+                "name": "measurementName",
+                "value": "recu/air_dampers",
+                "type": "str"
+            },
+            {
+                "name": "interval",
+                "value": "10",
+                "type": "str"
+            }
+        ],
+        "x": 570,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "b35bd987.7606b8",
+        "type": "subflow:13cbf77f.87a069",
+        "z": "6bebbd23.6d57e4",
+        "name": "Power consumption (W) get",
+        "env": [
+            {
+                "name": "fieldName",
+                "value": "ec3",
+                "type": "str"
+            },
+            {
+                "name": "measurementName",
+                "value": "recu/power-consumption",
+                "type": "str"
+            },
+            {
+                "name": "interval",
+                "value": "10",
+                "type": "str"
+            }
+        ],
+        "x": 600,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "f8dd7be3.d263a8",
+        "type": "subflow:13cbf77f.87a069",
+        "z": "6bebbd23.6d57e4",
+        "name": "Energy saving (%) get",
+        "env": [
+            {
+                "name": "fieldName",
+                "value": "v_es",
+                "type": "str"
+            },
+            {
+                "name": "measurementName",
+                "value": "recu/energy-saving",
+                "type": "str"
+            },
+            {
+                "name": "interval",
+                "value": "10",
+                "type": "str"
+            }
+        ],
+        "x": 580,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "9bb85848.9fd518",
+        "type": "subflow:13cbf77f.87a069",
+        "z": "6bebbd23.6d57e4",
+        "name": "Supply flow (m3/h) get",
+        "env": [
+            {
+                "name": "fieldName",
+                "value": "saf",
+                "type": "str"
+            },
+            {
+                "name": "measurementName",
+                "value": "recu/supply-flow",
+                "type": "str"
+            },
+            {
+                "name": "interval",
+                "value": "10",
+                "type": "str"
+            }
+        ],
+        "x": 580,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "fe3466d1.632048",
+        "type": "subflow:13cbf77f.87a069",
+        "z": "6bebbd23.6d57e4",
+        "name": "Extract flow (m3/h) get",
+        "env": [
+            {
+                "name": "fieldName",
+                "value": "eaf",
+                "type": "str"
+            },
+            {
+                "name": "measurementName",
+                "value": "recu/extract-flow",
+                "type": "str"
+            },
+            {
+                "name": "interval",
+                "value": "10",
+                "type": "str"
+            }
+        ],
+        "x": 580,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "3d961d50.cda2b2",
+        "type": "subflow:13cbf77f.87a069",
+        "z": "6bebbd23.6d57e4",
+        "name": "Supply fan (%) get",
+        "env": [
+            {
+                "name": "fieldName",
+                "value": "v_sfi",
+                "type": "str"
+            },
+            {
+                "name": "measurementName",
+                "value": "recu/supply-fan",
+                "type": "str"
+            },
+            {
+                "name": "interval",
+                "value": "10",
+                "type": "str"
+            }
+        ],
+        "x": 570,
+        "y": 440,
+        "wires": []
+    },
+    {
+        "id": "d1ff64d4.10d4b8",
+        "type": "subflow:13cbf77f.87a069",
+        "z": "6bebbd23.6d57e4",
+        "name": "Exhaust fan (%) get",
+        "env": [
+            {
+                "name": "fieldName",
+                "value": "v_efi",
+                "type": "str"
+            },
+            {
+                "name": "measurementName",
+                "value": "recu/exhaust-fan",
+                "type": "str"
+            },
+            {
+                "name": "interval",
+                "value": "10",
+                "type": "str"
+            }
+        ],
+        "x": 570,
+        "y": 500,
+        "wires": []
+    },
+    {
+        "id": "ed5b14b9.b05438",
+        "type": "komfoventNodeSet",
+        "z": "6bebbd23.6d57e4",
+        "displayName": "home set",
+        "user": "8ed427c6.e1f408",
+        "x": 700,
+        "y": 580,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "2dcd78be.a7aad8",
+        "type": "komfoventNodeSet",
+        "z": "6bebbd23.6d57e4",
+        "displayName": "away set",
+        "user": "8ed427c6.e1f408",
+        "x": 700,
+        "y": 620,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "c93381e3.8e6bd",
+        "type": "http in",
+        "z": "6bebbd23.6d57e4",
+        "name": "",
+        "url": "/ventillation/mode/home",
+        "method": "get",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 260,
+        "y": 580,
+        "wires": [
+            [
+                "f07d20ab.09ae5"
+            ]
+        ]
+    },
+    {
+        "id": "f07d20ab.09ae5",
+        "type": "function",
+        "z": "6bebbd23.6d57e4",
+        "name": "home",
+        "func": "\nreturn { payload: \"home\" };",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 510,
+        "y": 580,
+        "wires": [
+            [
+                "ed5b14b9.b05438"
+            ]
+        ]
+    },
+    {
+        "id": "b35af1.bbad651",
+        "type": "http in",
+        "z": "6bebbd23.6d57e4",
+        "name": "",
+        "url": "/ventillation/mode/away",
+        "method": "get",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 260,
+        "y": 620,
+        "wires": [
+            [
+                "98e77708.c54208"
+            ]
+        ]
+    },
+    {
+        "id": "98e77708.c54208",
+        "type": "function",
+        "z": "6bebbd23.6d57e4",
+        "name": "away",
+        "func": "\nreturn { payload: \"away\" };",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 510,
+        "y": 620,
+        "wires": [
+            [
+                "2dcd78be.a7aad8"
+            ]
+        ]
+    },
+    {
+        "id": "4afc5d49.367754",
+        "type": "function",
+        "z": "6bebbd23.6d57e4",
+        "name": "create onoff message",
+        "func": "\nreturn { payload: \"onoff\" };",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 400,
+        "y": 700,
+        "wires": [
+            [
+                "99fff37f.f14a6"
+            ]
+        ]
+    },
+    {
+        "id": "99fff37f.f14a6",
+        "type": "komfoventNodeSet",
+        "z": "6bebbd23.6d57e4",
+        "displayName": "send message",
+        "user": "8ed427c6.e1f408",
+        "x": 600,
+        "y": 700,
+        "wires": [
+            [
+                "f987263e.b7f878",
+                "c726fb23.458168"
+            ]
+        ]
+    },
+    {
+        "id": "f987263e.b7f878",
+        "type": "switch",
+        "z": "6bebbd23.6d57e4",
+        "name": "is success?",
+        "property": "payload.error",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "false"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 770,
+        "y": 700,
+        "wires": [
+            [
+                "e8ea63b6.5df3c"
+            ]
+        ]
+    },
+    {
+        "id": "e8ea63b6.5df3c",
+        "type": "function",
+        "z": "6bebbd23.6d57e4",
+        "name": "create home message",
+        "func": "\nreturn { payload: \"home\" };",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 400,
+        "y": 760,
+        "wires": [
+            [
+                "d21d42fb.b00d2"
+            ]
+        ]
+    },
+    {
+        "id": "f0de12d1.ceb26",
+        "type": "http in",
+        "z": "6bebbd23.6d57e4",
+        "name": "",
+        "url": "/ventillation/mode/onoff",
+        "method": "get",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 160,
+        "y": 700,
+        "wires": [
+            [
+                "4afc5d49.367754"
+            ]
+        ]
+    },
+    {
+        "id": "d21d42fb.b00d2",
+        "type": "komfoventNodeSet",
+        "z": "6bebbd23.6d57e4",
+        "displayName": "send message",
+        "user": "8ed427c6.e1f408",
+        "x": 600,
+        "y": 760,
+        "wires": [
+            [
+                "e94dd5e1.8b4c08"
+            ]
+        ]
+    },
+    {
+        "id": "d4b5948d.6d3e28",
+        "type": "inject",
+        "z": "6bebbd23.6d57e4",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 190,
+        "y": 780,
+        "wires": [
+            [
+                "4afc5d49.367754"
+            ]
+        ]
+    },
+    {
+        "id": "5c510eb6.97663",
+        "type": "inject",
+        "z": "6bebbd23.6d57e4",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 180,
+        "y": 840,
+        "wires": [
+            [
+                "d6f08abc.51b938"
+            ]
+        ]
+    },
+    {
+        "id": "d6f08abc.51b938",
+        "type": "function",
+        "z": "6bebbd23.6d57e4",
+        "name": "create onoff message",
+        "func": "\nreturn { payload: \"onoff\" };",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 380,
+        "y": 840,
+        "wires": [
+            [
+                "a61ac459.cfef98"
+            ]
+        ]
+    },
+    {
+        "id": "a61ac459.cfef98",
+        "type": "komfoventNodeSet",
+        "z": "6bebbd23.6d57e4",
+        "displayName": "send message",
+        "user": "8ed427c6.e1f408",
+        "x": 600,
+        "y": 840,
+        "wires": [
+            [
+                "bfed519e.4e60f"
+            ]
+        ]
+    },
+    {
+        "id": "bfed519e.4e60f",
+        "type": "debug",
+        "z": "6bebbd23.6d57e4",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 800,
+        "y": 860,
+        "wires": []
+    },
+    {
+        "id": "e94dd5e1.8b4c08",
+        "type": "debug",
+        "z": "6bebbd23.6d57e4",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 830,
+        "y": 780,
+        "wires": []
+    },
+    {
+        "id": "c726fb23.458168",
+        "type": "debug",
+        "z": "6bebbd23.6d57e4",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 910,
+        "y": 640,
+        "wires": []
+    },
+    {
+        "id": "5618bbe2.f1fd24",
+        "type": "inject",
+        "z": "6bebbd23.6d57e4",
+        "name": "fieldName",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "ac-1",
+        "payloadType": "str",
+        "x": 780,
+        "y": 460,
+        "wires": [
+            [
+                "c7e01c7e.439dd"
+            ]
+        ]
+    },
+    {
+        "id": "c7e01c7e.439dd",
+        "type": "komfoventNodeGet",
+        "z": "6bebbd23.6d57e4",
+        "displayName": "get",
+        "user": "8ed427c6.e1f408",
+        "x": 950,
+        "y": 460,
+        "wires": [
+            [
+                "99493c2e.4b1fa"
+            ]
+        ]
+    },
+    {
+        "id": "99493c2e.4b1fa",
+        "type": "debug",
+        "z": "6bebbd23.6d57e4",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 840,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "da62fcb1.10cf1",
+        "type": "openweathermap",
+        "z": "cbbff5e9.216548",
+        "name": "Home weather",
+        "wtype": "current",
+        "lon": "19.49181",
+        "lat": "51.66345",
+        "city": "",
+        "country": "",
+        "language": "en",
+        "x": 460,
+        "y": 260,
+        "wires": [
+            [
+                "2fc3bc25.18b254",
+                "ab6d364b.65d028",
+                "b156086b.7641c8"
+            ]
+        ]
+    },
+    {
+        "id": "ad5b652.bf7a798",
+        "type": "inject",
+        "z": "cbbff5e9.216548",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "3600",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 230,
+        "y": 260,
+        "wires": [
+            [
+                "da62fcb1.10cf1"
+            ]
+        ]
+    },
+    {
+        "id": "f110fbc8.8f1c58",
+        "type": "influxdb out",
+        "z": "cbbff5e9.216548",
+        "influxdb": "49824722.da0c98",
+        "name": "external/temp/ow",
+        "measurement": "external/temp/ow",
+        "precision": "",
+        "retentionPolicy": "",
+        "database": "database",
+        "precisionV18FluxV20": "ms",
+        "retentionPolicyV18Flux": "",
+        "org": "organisation",
+        "bucket": "bucket",
+        "x": 910,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "61829895.983168",
+        "type": "influxdb out",
+        "z": "cbbff5e9.216548",
+        "influxdb": "49824722.da0c98",
+        "name": "external/clouds/ow",
+        "measurement": "external/clouds/ow",
+        "precision": "",
+        "retentionPolicy": "",
+        "database": "database",
+        "precisionV18FluxV20": "ms",
+        "retentionPolicyV18Flux": "",
+        "org": "organisation",
+        "bucket": "bucket",
+        "x": 910,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "ff6556da.078cc8",
+        "type": "influxdb out",
+        "z": "cbbff5e9.216548",
+        "influxdb": "49824722.da0c98",
+        "name": "external/windspeed/ow",
+        "measurement": "external/windspeed/ow",
+        "precision": "",
+        "retentionPolicy": "",
+        "database": "database",
+        "precisionV18FluxV20": "ms",
+        "retentionPolicyV18Flux": "",
+        "org": "organisation",
+        "bucket": "bucket",
+        "x": 930,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "2fc3bc25.18b254",
+        "type": "function",
+        "z": "cbbff5e9.216548",
+        "name": "clouds",
+        "func": "return { payload: msg.payload.clouds };",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 670,
+        "y": 240,
+        "wires": [
+            [
+                "61829895.983168"
+            ]
+        ]
+    },
+    {
+        "id": "ab6d364b.65d028",
+        "type": "function",
+        "z": "cbbff5e9.216548",
+        "name": "windspeed",
+        "func": "return { payload: msg.payload.windspeed };",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 690,
+        "y": 180,
+        "wires": [
+            [
+                "ff6556da.078cc8"
+            ]
+        ]
+    },
+    {
+        "id": "b156086b.7641c8",
+        "type": "function",
+        "z": "cbbff5e9.216548",
+        "name": "temp",
+        "func": "return { payload: msg.payload.tempc };",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 670,
+        "y": 300,
+        "wires": [
+            [
+                "f110fbc8.8f1c58"
+            ]
+        ]
+    },
+    {
+        "id": "76bcab1.1f60054",
+        "type": "mqtt out",
+        "z": "c1c0d025.7190c",
+        "name": "blind living 1",
+        "topic": "ampio/to/87CB/o/3/cmd",
+        "qos": "",
+        "retain": "",
+        "broker": "190e1795.e65c88",
+        "x": 430,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "cd36bde0.d18c5",
+        "type": "inject",
+        "z": "c1c0d025.7190c",
+        "name": "down",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "1",
+        "payloadType": "num",
+        "x": 110,
+        "y": 260,
+        "wires": [
+            [
+                "76bcab1.1f60054",
+                "edb4790a.22a188",
+                "2265feed.afaef2",
+                "ce69ceb3.24d0d"
+            ]
+        ]
+    },
+    {
+        "id": "a13a16b2.2d1ab8",
+        "type": "inject",
+        "z": "c1c0d025.7190c",
+        "name": "stop",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "0",
+        "payloadType": "num",
+        "x": 110,
+        "y": 200,
+        "wires": [
+            [
+                "76bcab1.1f60054",
+                "edb4790a.22a188",
+                "2265feed.afaef2",
+                "ce69ceb3.24d0d"
+            ]
+        ]
+    },
+    {
+        "id": "d67c91ff.93f5f",
+        "type": "inject",
+        "z": "c1c0d025.7190c",
+        "name": "up",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "2",
+        "payloadType": "num",
+        "x": 110,
+        "y": 320,
+        "wires": [
+            [
+                "76bcab1.1f60054",
+                "ce69ceb3.24d0d",
+                "2265feed.afaef2",
+                "edb4790a.22a188"
+            ]
+        ]
+    },
+    {
+        "id": "edb4790a.22a188",
+        "type": "mqtt out",
+        "z": "c1c0d025.7190c",
+        "name": "blind living 2",
+        "topic": "ampio/to/87CB/o/4/cmd",
+        "qos": "",
+        "retain": "",
+        "broker": "190e1795.e65c88",
+        "x": 430,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "2265feed.afaef2",
+        "type": "mqtt out",
+        "z": "c1c0d025.7190c",
+        "name": "blind bathroom",
+        "topic": "ampio/to/8AC2/o/1/cmd",
+        "qos": "",
+        "retain": "",
+        "broker": "190e1795.e65c88",
+        "x": 440,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "ce69ceb3.24d0d",
+        "type": "mqtt out",
+        "z": "c1c0d025.7190c",
+        "name": "blind guest",
+        "topic": "ampio/to/8AC2/o/2/cmd",
+        "qos": "",
+        "retain": "",
+        "broker": "190e1795.e65c88",
+        "x": 430,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "b716ead0.10b178",
+        "type": "mqtt out",
+        "z": "c1c0d025.7190c",
+        "name": "blind dining",
+        "topic": "ampio/to/87CB/o/2/cmd",
+        "qos": "",
+        "retain": "",
+        "broker": "190e1795.e65c88",
+        "x": 970,
+        "y": 40,
+        "wires": []
+    },
+    {
+        "id": "2c9fa678.25c53a",
+        "type": "mqtt out",
+        "z": "c1c0d025.7190c",
+        "name": "blind kitchen",
+        "topic": "ampio/to/87CB/o/1/cmd",
+        "qos": "",
+        "retain": "",
+        "broker": "190e1795.e65c88",
+        "x": 930,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "32f2caf3.2c8b36",
+        "type": "inject",
+        "z": "c1c0d025.7190c",
+        "name": "stop",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "0",
+        "payloadType": "num",
+        "x": 730,
+        "y": 100,
+        "wires": [
+            [
+                "997f7d70.4614d",
+                "b716ead0.10b178"
+            ]
+        ]
+    },
+    {
+        "id": "ae080c55.f33d2",
+        "type": "inject",
+        "z": "c1c0d025.7190c",
+        "name": "down",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "1",
+        "payloadType": "num",
+        "x": 730,
+        "y": 40,
+        "wires": [
+            [
+                "997f7d70.4614d",
+                "b716ead0.10b178"
+            ]
+        ]
+    },
+    {
+        "id": "c877e8a9.5248c8",
+        "type": "inject",
+        "z": "c1c0d025.7190c",
+        "name": "up",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "2",
+        "payloadType": "num",
+        "x": 730,
+        "y": 160,
+        "wires": [
+            [
+                "997f7d70.4614d",
+                "b716ead0.10b178"
+            ]
+        ]
+    },
+    {
+        "id": "997f7d70.4614d",
+        "type": "mqtt out",
+        "z": "c1c0d025.7190c",
+        "name": "blanka",
+        "topic": "ampio/to/8AC2/o/3/cmd",
+        "qos": "",
+        "retain": "",
+        "broker": "190e1795.e65c88",
+        "x": 1070,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "cac5ffeb.6262",
+        "type": "inject",
+        "z": "c1c0d025.7190c",
+        "name": "down",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "1",
+        "payloadType": "num",
+        "x": 750,
+        "y": 220,
+        "wires": [
+            [
+                "2c9fa678.25c53a"
+            ]
+        ]
+    },
+    {
+        "id": "65a06f0c.afe97",
+        "type": "inject",
+        "z": "c1c0d025.7190c",
+        "name": "stop",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "0",
+        "payloadType": "num",
+        "x": 750,
+        "y": 340,
+        "wires": [
+            [
+                "2c9fa678.25c53a"
+            ]
+        ]
+    },
+    {
+        "id": "144d4977.3ccf27",
+        "type": "inject",
+        "z": "c1c0d025.7190c",
+        "name": "up",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "2",
+        "payloadType": "num",
+        "x": 750,
+        "y": 280,
+        "wires": [
+            [
+                "2c9fa678.25c53a"
+            ]
+        ]
+    },
+    {
+        "id": "ffd49f1c.732e8",
+        "type": "mqtt out",
+        "z": "c1c0d025.7190c",
+        "name": "blind bedroom",
+        "topic": "ampio/to/8AC2/o/4/cmd",
+        "qos": "",
+        "retain": "",
+        "broker": "190e1795.e65c88",
+        "x": 940,
+        "y": 480,
+        "wires": []
+    },
+    {
+        "id": "fddcf180.01e4b",
+        "type": "inject",
+        "z": "c1c0d025.7190c",
+        "name": "down",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "1",
+        "payloadType": "num",
+        "x": 710,
+        "y": 420,
+        "wires": [
+            [
+                "ffd49f1c.732e8"
+            ]
+        ]
+    },
+    {
+        "id": "be3fc619.024b28",
+        "type": "inject",
+        "z": "c1c0d025.7190c",
+        "name": "stop",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "0",
+        "payloadType": "num",
+        "x": 710,
+        "y": 480,
+        "wires": [
+            [
+                "ffd49f1c.732e8"
+            ]
+        ]
+    },
+    {
+        "id": "8d35a59e.203098",
+        "type": "inject",
+        "z": "c1c0d025.7190c",
+        "name": "up",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "2",
+        "payloadType": "num",
+        "x": 710,
+        "y": 540,
+        "wires": [
+            [
+                "ffd49f1c.732e8"
+            ]
+        ]
+    },
+    {
+        "id": "b9cf6135.ac5fa",
+        "type": "sunpos",
+        "z": "c1c0d025.7190c",
+        "name": "sun position",
+        "lon": "19.493367",
+        "lat": "51.666359",
+        "start": "sunriseEnd",
+        "startoffset": "",
+        "end": "goldenHour",
+        "endoffset": "-180",
+        "x": 390,
+        "y": 740,
+        "wires": [
+            [
+                "6d981ef1.97a3f"
+            ]
+        ]
+    },
+    {
+        "id": "6ab93549.461d9c",
+        "type": "inject",
+        "z": "c1c0d025.7190c",
+        "name": "10 min interval",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "600",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 200,
+        "y": 740,
+        "wires": [
+            [
+                "b9cf6135.ac5fa"
+            ]
+        ]
+    },
+    {
+        "id": "6d981ef1.97a3f",
+        "type": "join",
+        "z": "c1c0d025.7190c",
+        "name": "",
+        "mode": "custom",
+        "build": "object",
+        "property": "payload",
+        "propertyType": "msg",
+        "key": "topic",
+        "joiner": "\\n",
+        "joinerType": "str",
+        "accumulate": true,
+        "timeout": "",
+        "count": "1",
+        "reduceRight": false,
+        "reduceExp": "",
+        "reduceInit": "",
+        "reduceInitType": "num",
+        "reduceFixup": "",
+        "x": 570,
+        "y": 700,
+        "wires": [
+            [
+                "3847165.1ad55ea"
+            ]
+        ]
+    },
+    {
+        "id": "32514267.d37bce",
+        "type": "mqtt in",
+        "z": "c1c0d025.7190c",
+        "name": "blind kitchen state",
+        "topic": "ampio/from/87CB/state/a/1",
+        "qos": "2",
+        "datatype": "auto",
+        "broker": "190e1795.e65c88",
+        "inputs": 0,
+        "x": 970,
+        "y": 320,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "3847165.1ad55ea",
+        "type": "function",
+        "z": "c1c0d025.7190c",
+        "name": "evaluate action",
+        "func": "if(msg.payload.sun == null) return null;\nif(msg.payload.blindstate == null) return null;\n\nvar isSunInSky = msg.payload.sun.sunInSky;\nvar status = msg.payload.blindstate;\n\n//return {payload: {'status':status,\n//    sun: isSunInSky\n//}};\n\nif(status == \"100\" && isSunInSky == true) return {payload: 1};\nif(status == \"0\" && isSunInSky == false) return {payload: 2};\n\nreturn null;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 760,
+        "y": 700,
+        "wires": [
+            [
+                "b280a085.0bf6"
+            ]
+        ]
+    },
+    {
+        "id": "49e58fa2.e83a9",
+        "type": "mqtt in",
+        "z": "c1c0d025.7190c",
+        "name": "blind bedroom state",
+        "topic": "ampio/from/8AC2/state/a/4",
+        "qos": "2",
+        "datatype": "auto",
+        "broker": "190e1795.e65c88",
+        "inputs": 0,
+        "x": 190,
+        "y": 660,
+        "wires": [
+            [
+                "638b2db.3dcc1d4"
+            ]
+        ]
+    },
+    {
+        "id": "b280a085.0bf6",
+        "type": "debug",
+        "z": "c1c0d025.7190c",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 970,
+        "y": 700,
+        "wires": []
+    },
+    {
+        "id": "638b2db.3dcc1d4",
+        "type": "function",
+        "z": "c1c0d025.7190c",
+        "name": "map topic",
+        "func": "return { topic: 'blindstate', payload: msg.payload };",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 400,
+        "y": 660,
+        "wires": [
+            [
+                "6d981ef1.97a3f"
+            ]
+        ]
+    },
+    {
+        "id": "29a0e3c5.ccd38c",
+        "type": "inject",
+        "z": "c1c0d025.7190c",
+        "name": "down",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "1",
+        "payloadType": "num",
+        "x": 110,
+        "y": 440,
+        "wires": [
+            [
+                "ce69ceb3.24d0d"
+            ]
+        ]
+    },
+    {
+        "id": "aa94654.cd2d998",
+        "type": "sunpos",
+        "z": "34d5b010.8abea",
+        "name": "sun position",
+        "lon": "19.493367",
+        "lat": "51.666359",
+        "start": "goldenHourEnd",
+        "startoffset": "",
+        "end": "goldenHour",
+        "endoffset": 0,
+        "x": 390,
+        "y": 440,
+        "wires": [
+            [
+                "ae411547.2db458"
+            ]
+        ]
+    },
+    {
+        "id": "9b122e7b.7f597",
+        "type": "debug",
+        "z": "34d5b010.8abea",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 770,
+        "y": 440,
+        "wires": []
+    },
+    {
+        "id": "e9fcdb2c.857b18",
+        "type": "inject",
+        "z": "34d5b010.8abea",
+        "name": "10 min interval",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "600",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 200,
+        "y": 440,
+        "wires": [
+            [
+                "aa94654.cd2d998"
+            ]
+        ]
+    },
+    {
+        "id": "ae411547.2db458",
+        "type": "switch",
+        "z": "34d5b010.8abea",
+        "name": "is sun up",
+        "property": "payload.sunInSky",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "false"
+            },
+            {
+                "t": "true"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 560,
+        "y": 440,
+        "wires": [
+            [
+                "9b122e7b.7f597"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "99f7f23d.ba1ea",
+        "type": "blindcontroller",
+        "z": "34d5b010.8abea",
+        "name": "guest",
+        "mode": "Summer",
+        "channel": "guest",
+        "orientation": "154",
+        "noffset": "",
+        "poffset": "",
+        "top": "2.3",
+        "bottom": "1",
+        "depth": "0",
+        "altitudethreshold": "",
+        "increment": "100",
+        "maxopen": "",
+        "maxclosed": "",
+        "temperaturethreshold": "",
+        "temperaturethresholdposition": "",
+        "cloudsthreshold": "0.5",
+        "cloudsthresholdposition": "",
+        "uvindexthreshold": "",
+        "uvindexthresholdposition": "",
+        "nightposition": "",
+        "expiryperiod": "420",
+        "opposite": "",
+        "x": 570,
+        "y": 540,
+        "wires": [
+            [
+                "8ba793d0.3a50c"
+            ]
+        ]
+    },
+    {
+        "id": "4e1820f7.9665a",
+        "type": "sunpos",
+        "z": "34d5b010.8abea",
+        "name": "sun position",
+        "lon": "19.493367",
+        "lat": "51.666359",
+        "start": "sunrise",
+        "startoffset": "",
+        "end": "dusk",
+        "endoffset": 0,
+        "x": 350,
+        "y": 540,
+        "wires": [
+            [
+                "99f7f23d.ba1ea"
+            ]
+        ]
+    },
+    {
+        "id": "7412a9df.7d4c18",
+        "type": "openweathermap",
+        "z": "34d5b010.8abea",
+        "name": "Home weather",
+        "wtype": "current",
+        "lon": "19.49181",
+        "lat": "51.66345",
+        "city": "",
+        "country": "",
+        "language": "en",
+        "x": 500,
+        "y": 700,
+        "wires": [
+            [
+                "a15d28c7.5fd9a8"
+            ]
+        ]
+    },
+    {
+        "id": "29dbc9c.6e46f36",
+        "type": "function",
+        "z": "34d5b010.8abea",
+        "name": "evaluate action",
+        "func": "if(msg.payload === null) return { payload: { status: -1, error: \"Msg payload null\" }};\nvar payload = msg.payload;\nvar weather = payload.weather;\nvar blindstate = payload.blindstate;\nvar blind = payload.blind;\n\nif(weather === null) return { payload: { status: -1, error: \"Weather null\" }};\nif(blindstate === null) return { payload: { status: -1, error: \"Blindstate null\" }};\nif(blind === null) return { payload: { status: -1, error: \"Blind null\" }};\n\nvar newBlindPosition = blind.blindPosition;\nvar currentBlindPosition = Number.parseInt(msg.payload.blindstate);\n\nif(weather.windspeed > 7) newBlindPosition == 100;\nif(weather.rain > 0) newBlindPosition = 100;\n\nif(newBlindPosition === currentBlindPosition) return { payload: {status: 0, info: \"Blind postion doesn't change\"}};\n\nif(newBlindPosition == 100) return {payload: {status: 1, info: \"Up\"}};\nif(newBlindPosition === 0) return {payload: {status: 2, info: \"Down\"}};\n\nreturn null;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 1100,
+        "y": 820,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "f392d198.ff1ef",
+        "type": "mqtt in",
+        "z": "34d5b010.8abea",
+        "name": "blind guest state",
+        "topic": "ampio/from/8AC2/state/a/2",
+        "qos": "2",
+        "datatype": "auto",
+        "broker": "190e1795.e65c88",
+        "nl": false,
+        "rap": false,
+        "inputs": 0,
+        "x": 120,
+        "y": 600,
+        "wires": [
+            [
+                "9fd7887a.e10088"
+            ]
+        ]
+    },
+    {
+        "id": "9fd7887a.e10088",
+        "type": "function",
+        "z": "34d5b010.8abea",
+        "name": "map topic",
+        "func": "return { topic: 'blindstate', payload: msg.payload };",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 340,
+        "y": 600,
+        "wires": [
+            [
+                "8ba793d0.3a50c"
+            ]
+        ]
+    },
+    {
+        "id": "8ba793d0.3a50c",
+        "type": "join",
+        "z": "34d5b010.8abea",
+        "name": "",
+        "mode": "custom",
+        "build": "object",
+        "property": "payload",
+        "propertyType": "msg",
+        "key": "topic",
+        "joiner": "\\n",
+        "joinerType": "str",
+        "accumulate": true,
+        "timeout": "",
+        "count": "1",
+        "reduceRight": false,
+        "reduceExp": "",
+        "reduceInit": "",
+        "reduceInitType": "num",
+        "reduceFixup": "",
+        "x": 750,
+        "y": 600,
+        "wires": [
+            [
+                "a71d930b.72131"
+            ]
+        ]
+    },
+    {
+        "id": "a260de75.bf8f7",
+        "type": "inject",
+        "z": "34d5b010.8abea",
+        "name": "10 min interval",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "600",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 140,
+        "y": 540,
+        "wires": [
+            [
+                "4e1820f7.9665a"
+            ]
+        ]
+    },
+    {
+        "id": "a71d930b.72131",
+        "type": "function",
+        "z": "34d5b010.8abea",
+        "name": "evaluate action - no weather",
+        "func": "if(\n    msg.payload.blindstate == null ||\n    msg.payload.blind == null\n) return null;\n\nvar newBlindPosition = msg.payload.blind.blindPosition;\nvar currentBlindPosition = Number.parseInt(msg.payload.blindstate);\n\nif(newBlindPosition === currentBlindPosition) return null\n\nif(newBlindPosition == 100) return {payload: 1};\nif(newBlindPosition == 0) return {payload: 2};\n\nreturn null;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 960,
+        "y": 640,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "307f1fbc.b4147",
+        "type": "blindcontroller",
+        "z": "34d5b010.8abea",
+        "name": "guest",
+        "mode": "Summer",
+        "channel": "guest",
+        "orientation": "154",
+        "noffset": "",
+        "poffset": "",
+        "top": "2.3",
+        "bottom": "1",
+        "depth": "0",
+        "altitudethreshold": "",
+        "increment": "100",
+        "maxopen": "",
+        "maxclosed": "",
+        "temperaturethreshold": "24",
+        "temperaturethresholdposition": "100",
+        "cloudsthreshold": "0.5",
+        "cloudsthresholdposition": "100",
+        "uvindexthreshold": "",
+        "uvindexthresholdposition": "",
+        "nightposition": "",
+        "expiryperiod": "420",
+        "opposite": "",
+        "x": 690,
+        "y": 820,
+        "wires": [
+            [
+                "5894ce4.9b7113"
+            ]
+        ]
+    },
+    {
+        "id": "e74d012b.8edb5",
+        "type": "sunpos",
+        "z": "34d5b010.8abea",
+        "name": "sun position",
+        "lon": "19.493367",
+        "lat": "51.666359",
+        "start": "sunrise",
+        "startoffset": "",
+        "end": "goldenHour",
+        "endoffset": 0,
+        "x": 370,
+        "y": 820,
+        "wires": [
+            [
+                "307f1fbc.b4147",
+                "7412a9df.7d4c18"
+            ]
+        ]
+    },
+    {
+        "id": "a17784ec.ea6c28",
+        "type": "mqtt in",
+        "z": "34d5b010.8abea",
+        "name": "blind guest state",
+        "topic": "ampio/from/8AC2/state/a/2",
+        "qos": "2",
+        "datatype": "auto",
+        "broker": "190e1795.e65c88",
+        "inputs": 0,
+        "x": 140,
+        "y": 880,
+        "wires": [
+            [
+                "d52e8f26.53251"
+            ]
+        ]
+    },
+    {
+        "id": "d52e8f26.53251",
+        "type": "function",
+        "z": "34d5b010.8abea",
+        "name": "map topic",
+        "func": "return { topic: 'blindstate', payload: msg.payload };",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 700,
+        "y": 880,
+        "wires": [
+            [
+                "5894ce4.9b7113"
+            ]
+        ]
+    },
+    {
+        "id": "5894ce4.9b7113",
+        "type": "join",
+        "z": "34d5b010.8abea",
+        "name": "",
+        "mode": "custom",
+        "build": "object",
+        "property": "payload",
+        "propertyType": "msg",
+        "key": "topic",
+        "joiner": "\\n",
+        "joinerType": "str",
+        "accumulate": true,
+        "timeout": "",
+        "count": "1",
+        "reduceRight": false,
+        "reduceExp": "",
+        "reduceInit": "",
+        "reduceInitType": "num",
+        "reduceFixup": "",
+        "x": 890,
+        "y": 820,
+        "wires": [
+            [
+                "29dbc9c.6e46f36"
+            ]
+        ]
+    },
+    {
+        "id": "40e1b321.4b4fac",
+        "type": "inject",
+        "z": "34d5b010.8abea",
+        "name": "10 min interval",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "1800",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 160,
+        "y": 820,
+        "wires": [
+            [
+                "e74d012b.8edb5"
+            ]
+        ]
+    },
+    {
+        "id": "e82e175a.a56658",
+        "type": "e-mail",
+        "z": "34d5b010.8abea",
+        "server": "smtp.poczta.onet.pl",
+        "port": "465",
+        "secure": true,
+        "tls": true,
+        "name": "fcjuventus@poczta.onet.pl",
+        "dname": "onet",
+        "x": 1250,
+        "y": 920,
+        "wires": []
+    },
+    {
+        "id": "a15d28c7.5fd9a8",
+        "type": "function",
+        "z": "34d5b010.8abea",
+        "name": "map weather",
+        "func": "if(msg.payload === null) return null;\n\nreturn { \n    topic: 'weather', \n    payload: {\n        clouds: msg.payload.clouds / 100,\n        windspeed: msg.payload.windspeed,\n        weather: msg.payload.weather,\n        rain: msg.payload.rain,\n        temp: msg.payload.tempc,\n    }\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 690,
+        "y": 700,
+        "wires": [
+            [
+                "307f1fbc.b4147",
+                "5894ce4.9b7113"
+            ]
+        ]
+    },
+    {
+        "id": "25c8dfa2.27441",
+        "type": "mqtt out",
+        "z": "34d5b010.8abea",
+        "name": "blind guest",
+        "topic": "ampio/to/8AC2/o/2/cmd",
+        "qos": "",
+        "retain": "",
+        "broker": "190e1795.e65c88",
+        "x": 1290,
+        "y": 740,
         "wires": []
     }
 ]

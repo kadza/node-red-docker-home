@@ -1,4 +1,4 @@
-ARG ARCH=amd64
+ARG ARCH=arm64
 ARG NODE_VERSION=16
 ARG OS=alpine
 
@@ -37,7 +37,15 @@ RUN ./known_hosts.sh /etc/ssh/ssh_known_hosts && rm /usr/src/node-red/known_host
 RUN echo "PubkeyAcceptedKeyTypes +ssh-rsa" >> /etc/ssh/ssh_config
 
 # package.json contains Node-RED NPM module and node dependencies
+ARG NPM_TOKEN
+RUN touch .npmrc
+RUN echo "//npm.pkg.github.com/:_authToken=$NPM_TOKEN" >> .npmrc
+RUN echo "@kadza:registry=https://npm.pkg.github.com" >> .npmrc
 COPY package.json .
+RUN mkdir /data/homekit-persist
+COPY --chown=node-red homekit /data/homekit-persist/
+COPY settings.js /data/settings.js
+COPY flows_cred.json /data/flows_cred.json
 COPY flows.json /data
 COPY scripts/entrypoint.sh .
 
@@ -46,9 +54,11 @@ FROM base AS build
 
 # Install Build tools
 RUN apk add --no-cache --virtual buildtools build-base linux-headers udev python3 && \
-    npm install --unsafe-perm --no-update-notifier --no-fund --only=production && \
+    npm install --verbose --unsafe-perm --no-update-notifier --no-fund --only=production && \
     /tmp/remove_native_gpio.sh && \
     cp -R node_modules prod_node_modules
+
+RUN rm -f .npmrc
 
 #### Stage RELEASE #####################################################################################################
 FROM base AS RELEASE
@@ -79,7 +89,7 @@ RUN chown -R node-red:root /usr/src/node-red && \
     /tmp/install_devtools.sh && \
     rm -r /tmp/*
 
-RUN npm config set cache /data/.npm --global 
+RUN npm config set cache /data/.npm --global
 RUN npm config set python `which python3` --global
 
 USER node-red
